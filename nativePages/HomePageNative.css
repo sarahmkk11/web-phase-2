@@ -1,0 +1,63 @@
+/* Reset default margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Set background color and font styles */
+  body {
+    background-color: #ffffff;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    color: #203162;
+  }
+
+.Native{
+
+    position: relative;
+    margin-left: 500px;
+    margin-top: 50px;
+}
+
+
+.Teach {
+    position: absolute;
+    text-align: left;
+    margin-left: 50px; /* Adjust the value to position it as desired */
+    margin-top:80px ;
+}
+
+.Teach h1{
+     
+    font-size: 36px;
+    margin-bottom: px;
+    color: #333;
+    background: linear-gradient(135deg,#5fc6dd,#6167d3 );
+    -webkit-background-clip: text;
+ -webkit-text-fill-color: transparent
+}
+
+
+.Status{
+   position: absolute;
+    margin-top:50px;
+    padding: 0px 80px;
+    text-align: center;
+    font-size: 30px;
+    background: linear-gradient(135deg,#5fc6dd,#6167d3 );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent
+  }
+
+  .LLrequest{
+  position: absolute;
+    margin-top: -10px;
+    padding: 0px 80px;
+    text-align: center;
+    font-size: 30px;
+    background: linear-gradient(135deg,#5fc6dd,#6167d3 );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent
+    
+    }

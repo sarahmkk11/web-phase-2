@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<!---------------------HEAD---------------------------->
+<head>
+  <title>TalkTandem | SignUp</title>
+  <link rel="stylesheet" type="text/css" href="SignUp-login.css">
+  <link rel="shortcut icon" href="Logo white .jpeg" type="image/x-icon">
+</head>
+
+<!---------------------BODY---------------------------->
+<body>
+  <h1>Signup</h1>
+  <form method="POST" >
+    <label for="First Name">First Name:</label>
+    <input type="text" id="First Name" name="First Name" required><br><br>
+
+    <label for="Last Name">Last Name:</label>
+    <input type="text" id="Last Name" name="Last Name" required><br><br>
+
+    <!-----------------------AGE--------------------------------->
+    <label for="age">Select your age:</label>
+    <select id="age" name="age" onchange="showOptions()" required>
+      <option value="">Please select</option>
+      <option value="0-17">Under 18</option>
+      <option value="18-30">18-30</option>
+      <option value="31-50">31-50</option>
+      <option value="51-100">51-100</option>
+    </select>
+    
+    <script>
+    function showOptions() {
+      var ageSelect = document.getElementById("age");
+      var selectedValue = ageSelect.value;
+      
+      // Hide all options
+      var options = ageSelect.getElementsByTagName("option");
+      for (var i = 0; i < options.length; i++) {
+        options[i].style.display = "none";
+      }
+      
+      // Show selected option
+      if (selectedValue !== "") {
+        var selectedOption = ageSelect.querySelector('option[value="' + selectedValue + '"]');
+        selectedOption.style.display = "block";
+      }
+    }
+    </script>
+<br><br>
+    
+<!--------------------GENDER------------------------------>
+    <label for="Gender">Gender:</label>
+      <input type="radio" name="gender" value="male"required>
+      Male
+  
+      <input type="radio" name="gender" value="female"required>
+      Female
+    </label> <br><br>
+
+    <label for="Email">Email:</label>
+    <input type="Email" id="email" name="Email" required><br><br>
+
+
+    <label for="photo">Photo:</label>
+    <input type="file" id="photo" name="photo"><br><br>
+
+ <label for="Password">Password:</label>
+    <input type="Password" id="Password" name="Password" required><br><br>
+    
+  <label for="phone">phone</label>
+    <input type="text" id="phone" name="phone" required><br><br>
+
+    <label for="city">City:</label>
+    <input type="text" id="city" name="city" required><br><br>
+
+  
+
+
+    <label for="short-bio">short bio:</label>
+    <input type="text" id="short-bio" name="short-bio" required><br><br>
+
+    <input type="submit" value="Sign Up">
+    <h5>Already have an account? <a href="loginN.html">Login</a></h5>
+
+</form>
+
+
+
+</body>
+
+
+</html>
+
+
+
+
