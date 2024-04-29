@@ -6,43 +6,115 @@
   <title>TalkTandem | SignUp</title>
   <link rel="stylesheet" type="text/css" href="SignUp-login.css">
   <link rel="shortcut icon" href="Logo white .jpeg" type="image/x-icon">
+  <style>
+    .error {
+      color: red;
+      font-size: smaller;
+    }
+  </style>
   <script>
-    function validateForm() {
+    function validateFirstName() {
       var firstName = document.getElementById("firstName").value;
+      var firstNameError = document.getElementById("firstNameError");
+      if (firstName.trim() === "") {
+        firstNameError.innerText = "First name is required";
+        return false;
+      } else if (!/^[a-zA-Z]+$/.test(firstName)) {
+        firstNameError.innerText = "First name should only contain letters";
+        return false;
+      } else {
+        firstNameError.innerText = "";
+        return true;
+      }
+    }
+
+    function validateLastName() {
       var lastName = document.getElementById("lastName").value;
+      var lastNameError = document.getElementById("lastNameError");
+      if (lastName.trim() === "") {
+        lastNameError.innerText = "Last name is required";
+        return false;
+      } else if (!/^[a-zA-Z]+$/.test(lastName)) {
+        lastNameError.innerText = "Last name should only contain letters";
+        return false;
+      } else {
+        lastNameError.innerText = "";
+        return true;
+      }
+    }
+
+    function validateEmail() {
       var email = document.getElementById("email").value;
+      var emailError = document.getElementById("emailError");
+      if (email.trim() === "") {
+        emailError.innerText = "Email is required";
+        return false;
+      } else {
+        var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+          emailError.innerText = "Please enter a valid email address";
+          return false;
+        } else {
+          emailError.innerText = "";
+          return true;
+        }
+      }
+    }
+
+    function validatePassword() {
       var password = document.getElementById("password").value;
+      var passwordError = document.getElementById("passwordError");
+      if (password.trim() === "") {
+        passwordError.innerText = "Password is required";
+        return false;
+      } else {
+        var passwordStrengthPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$/;
+        if (!passwordStrengthPattern.test(password)) {
+          passwordError.innerText = "The password must be at least eight characters long, with at least one capital, one lowercase, one number, and one special character.";
+          return false;
+        } else {
+          passwordError.innerText = "";
+          return true;
+        }
+      }
+    }
+
+    function validateCity() {
       var city = document.getElementById("city").value;
+      var cityError = document.getElementById("cityError");
+      if (city.trim() === "") {
+        cityError.innerText = "City is required";
+        return false;
+      } else if (!/^[a-zA-Z\s]+$/.test(city)) {
+        cityError.innerText = "City should only contain letters";
+        return false;
+      } else {
+        cityError.innerText = "";
+        return true;
+      }
+    }
+
+    function validateLocation() {
       var location = document.getElementById("location").value;
-
-     
-      if (firstName == "" || lastName == "" || email == "" || password == "" || city == "" || location == "") {
-        alert("All fields must be filled out");
+      var locationError = document.getElementById("locationError");
+      if (location.trim() === "") {
+        locationError.innerText = "Location is required";
         return false;
+      } else {
+        locationError.innerText = "";
+        return true;
       }
+    }
 
-      // Validate email format
-      var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailPattern.test(email)) {
-        alert("Please enter a valid email address");
-        return false;
-      }
+    function validateForm() {
+      var isFirstNameValid = validateFirstName();
+      var isLastNameValid = validateLastName();
+      var isEmailValid = validateEmail();
+      var isPasswordValid = validatePassword();
+      var isCityValid = validateCity();
+      var isLocationValid = validateLocation();
 
-      // Validate password strength
-      var passwordStrengthPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$/;
-      if (!passwordStrengthPattern.test(password)) {
-        alert("The password must be at least eight characters long, with at least one capital, one lowercase, one number, and one special character.");
-        return false;
-      }
-
-      // Validate first name and last name
-      var namePattern = /^[a-zA-Z]+$/;
-      if (!namePattern.test(firstName) || !namePattern.test(lastName)) {
-        alert("First and last names should not contain numbers or special characters");
-        return false;
-      }
-
-      return true;
+      return isFirstNameValid && isLastNameValid && isEmailValid && isPasswordValid && isCityValid && isLocationValid;
     }
   </script>
 </head>
@@ -51,25 +123,31 @@
   <h1>Signup</h1>
   <form method="POST" action="../LearnerPages/HomePageLerner.html" onsubmit="return validateForm()">
     <label for="firstName">First Name:<span style="color: red;">*</span></label>
-    <input type="text" id="firstName" name="firstName" ><br><br>
+    <input type="text" id="firstName" name="firstName" oninput="validateFirstName()">
+    <span id="firstNameError" class="error"></span><br><br>
 
     <label for="lastName">Last Name:<span style="color: red;">*</span></label>
-    <input type="text" id="lastName" name="lastName" ><br><br>
+    <input type="text" id="lastName" name="lastName" oninput="validateLastName()">
+    <span id="lastNameError" class="error"></span><br><br>
 
     <label for="email">Email:<span style="color: red;">*</span></label>
-    <input type="email" id="email" name="email" ><br><br>
+    <input type="email" id="email" name="email" oninput="validateEmail()">
+    <span id="emailError" class="error"></span><br><br>
 
     <label for="password">Password:<span style="color: red;">*</span></label>
-    <input type="password" id="password" name="password" ><br><br>
+    <input type="password" id="password" name="password" oninput="validatePassword()">
+    <span id="passwordError" class="error"></span><br><br>
 
     <label for="photo">Photo:</label>
     <input type="file" id="photo" name="photo"><br><br>
 
     <label for="city">City:<span style="color: red;">*</span></label>
-    <input type="text" id="city" name="city" ><br><br>
+    <input type="text" id="city" name="city" oninput="validateCity()">
+    <span id="cityError" class="error"></span><br><br>
 
     <label for="location">Location:<span style="color: red;">*</span></label>
-    <input type="text" id="location" name="location" ><br><br>
+    <input type="text" id="location" name="location" oninput="validateLocation()">
+    <span id="locationError" class="error"></span><br><br>
 
     <input type="submit" value="Sign Up">
     <h5>Already have an account? <a href="loginL.html">Login</a></h5>
