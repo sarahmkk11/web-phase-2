@@ -5,12 +5,7 @@
   <title>TalkTandem | SignUp</title>
   <link rel="stylesheet" type="text/css" href="SignUp-login.css">
   <link rel="shortcut icon" href="Logo white .jpeg" type="image/x-icon">
-  <style>
-    .error {
-      color: red;
-      font-size: smaller;
-    }
-  </style>
+  
   <script>
 
     function validateFirstName() {
@@ -137,7 +132,7 @@
       }
     }
 
-      function validateShortBio() {
+    function validateShortBio() {
         var shortBio = document.getElementById("short-bio").value;
         var shortBioError = document.getElementById("shortBioError");
         if (shortBio.trim() === "") {
@@ -161,14 +156,18 @@
 
       return isFirstNameValid && isLastNameValid && isEmailValid && isPasswordValid && isCityValid && isAgeValid && isGenderValid && isPhoneValid && isShortBioValid;
       }
+
   </script>
 </head>
 
 <body>
   <h1>Signup</h1>
-  <form method="POST" action="../LearnerPages/HomePageLerner.html" onsubmit="return validateForm()">
+  <form method="POST" action="../nativePages/HomePageNative.html" onsubmit="return validateForm()">
     <label for="firstName">First Name<span style="color: red;">*</span>:</label>
     <input type="text" id="firstName" name="firstName" oninput="validateFirstName()">
+
+
+
     <span id="firstNameError" class="error"></span><br><br>
 
     <label for="lastName">Last Name<span style="color: red;">*</span>:</label>
@@ -197,6 +196,9 @@
     <label for="password">Password<span style="color: red;">*</span>:</label>
     <input type="password" id="password" name="password" oninput="validatePassword()">
     <span id="passwordError" class="error"></span><br><br>
+
+    <label for="photo">Photo:</label>
+    <input type="file" id="photo" name="photo"><br><br>
 
     <label for="phone">Phone<span style="color: red;">*</span>:</label>
     <input type="text" id="phone" name="phone" oninput="validatePhone()">

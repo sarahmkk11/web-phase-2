@@ -85,8 +85,21 @@ form input[type="submit"]:hover {
   background-color:#434059 ;
 }
 
+.error {
+  color: red;
+  font-size: smaller;
+}
 
+/* Styles for required labels */
+.required-label {
+  color: black; /* Default label color */
+}
 
+/* Styles for asterisks denoting required fields */
+.required-label:after {
+  content: "*";
+  color: red;
+}
 
 
 
