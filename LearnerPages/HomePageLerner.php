@@ -51,7 +51,7 @@
                 
                 <li><a href="LearnerProfile.html">Manage Profile</a></li>
              
-                <li><a href="../homePage/HomePage.html">Sign Out</a></li>
+                <li><a href="signOutL.php">Sign Out</a></li>
             </ul> 
         </nav>
         
@@ -60,10 +60,21 @@
     
   
 	<div class="container">
-        <div class="text">
-            <h1>Speak with tandem</h1>
-            <p>Master any language by actually chatting with real people</p>
-        </div>
+    <div class="text">
+      <?php
+      // Start session
+      session_start();
+      // Check if the user's name is set in the session
+      if (isset($_SESSION['userName'])) {
+          echo "<h1>Welcome, " . $_SESSION['userName'] . "!</h1>";
+      } else {
+          // Default welcome message if user is not logged in
+          echo "<h1>Speak with tandem</h1>";
+      }
+      ?>
+      <p>Master any language by actually chatting with real people</p>
+  </div>
+  
         <div class="learner">
             <img src="../homePage/language-learner.png" alt="Language Learner">
         </div>

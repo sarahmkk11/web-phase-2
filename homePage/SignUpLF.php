@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 
@@ -8,32 +7,32 @@
   <link rel="shortcut icon" href="Logo white .jpeg" type="image/x-icon">
  
   <script>
-    function validateFirstName() {
-      var firstName = document.getElementById("firstName").value;
-      var firstNameError = document.getElementById("firstNameError");
-      if (firstName.trim() === "") {
-        firstNameError.innerText = "First name is required";
+    function validatefirst_name() {
+      var first_name = document.getElementById("first_name").value;
+      var first_nameError = document.getElementById("first_nameError");
+      if (first_name.trim() === "") {
+        first_nameError.innerText = "First name is required";
         return false;
-      } else if (!/^[a-zA-Z]+$/.test(firstName)) {
-        firstNameError.innerText = "First name should only contain letters";
+      } else if (!/^[a-zA-Z]+$/.test(first_name)) {
+        first_nameError.innerText = "First name should only contain letters";
         return false;
       } else {
-        firstNameError.innerText = "";
+        first_nameError.innerText = "";
         return true;
       }
     }
 
-    function validateLastName() {
-      var lastName = document.getElementById("lastName").value;
-      var lastNameError = document.getElementById("lastNameError");
-      if (lastName.trim() === "") {
-        lastNameError.innerText = "Last name is required";
+    function validatelastt_name() {
+      var lastt_name = document.getElementById("lastt_name").value;
+      var lastt_nameError = document.getElementById("lastt_nameError");
+      if (lastt_name.trim() === "") {
+        lastt_nameError.innerText = "Last name is required";
         return false;
-      } else if (!/^[a-zA-Z]+$/.test(lastName)) {
-        lastNameError.innerText = "Last name should only contain letters";
+      } else if (!/^[a-zA-Z]+$/.test(lastt_name)) {
+        lastt_nameError.innerText = "Last name should only contain letters";
         return false;
       } else {
-        lastNameError.innerText = "";
+        lastt_nameError.innerText = "";
         return true;
       }
     }
@@ -102,29 +101,29 @@
     }
 
     function validateForm() {
-      var isFirstNameValid = validateFirstName();
-      var isLastNameValid = validateLastName();
+      var isfirst_nameValid = validatefirst_name();
+      var islastt_nameValid = validatelastt_name();
       var isEmailValid = validateEmail();
       var isPasswordValid = validatePassword();
       var isCityValid = validateCity();
       var isLocationValid = validateLocation();
 
-      return isFirstNameValid && isLastNameValid && isEmailValid && isPasswordValid && isCityValid && isLocationValid;
+      return isfirst_nameValid && islastt_nameValid && isEmailValid && isPasswordValid && isCityValid && isLocationValid;
     }
   </script>
 </head>
 
 <body>
   <h1 class="signup-heading">Signup</h1>
-  <form method="POST" action="../LearnerPages/HomePageLerner.html" onsubmit="return validateForm()">
+  <form method="POST" action="signUpL.php" onsubmit="return validateForm()" enctype="multipart/form-data">
 
-    <label for="firstName" class="required-label">First Name:</label>
-    <input type="text" id="firstName" name="firstName" class="input-field" oninput="validateFirstName()">
-    <span id="firstNameError" class="error"></span><br><br>
+    <label for="first_name" class="required-label">First Name:</label>
+    <input type="text" id="first_name" name="first_name" class="input-field" oninput="validatefirst_name()">
+    <span id="first_nameError" class="error"></span><br><br>
 
-    <label for="lastName" class="required-label">Last Name:</label>
-    <input type="text" id="lastName" name="lastName" class="input-field" oninput="validateLastName()">
-    <span id="lastNameError" class="error"></span><br><br>
+    <label for="last_name" class="required-label">Last Name:</label>
+    <input type="text" id="last_name" name="last_name" class="input-field" oninput="validatelastt_name()">
+    <span id="last_nameError" class="error"></span><br><br>
 
     <label for="email" class="required-label">Email:</label>
     <input type="email" id="email" name="email" class="input-field" oninput="validateEmail()">
