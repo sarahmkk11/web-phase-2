@@ -8,7 +8,7 @@
 <body>
   <div class="container">
     <h1>Login</h1>
-    <form>
+    <form method="POST" action="loginN.php">
       <div class="form-group">
         <label for="email">Email:</label>
         <input type="text" id="email" name="email" placeholder="Enter your Email" required>
@@ -19,7 +19,7 @@
       </div>
      
       <input type="submit" value="Login">
-      <h5>Don't have an account? <a href="SignUpN.html">SignUp</a></h5>
+      <h5>Don't have an account? <a href="SignUpN.php">SignUp</a></h5>
 
     </form>
   </div>

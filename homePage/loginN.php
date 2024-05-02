@@ -1,5 +1,6 @@
 <?php
-session_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 // Database connection parameters
 $servername = "localhost";
@@ -10,18 +11,17 @@ $dbname = "projectdb";
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Test database connection
+// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
 // Get form data
-$email = isset($_POST['Email']) ? $_POST['Email'] : '';
+$email = isset($_POST['email']) ? $_POST['email'] : '';
 $password = isset($_POST['password']) ? $_POST['password'] : '';
 
-// Prepare SQL statement to check if the email exists and retrieve the user's name
-$sql = "SELECT * FROM language_learners WHERE email=?";
-$stmt = $conn->prepare($sql);
+// Prepare SQL statement to check if the email exists and retrieve user data
+$stmt = $conn->prepare("SELECT * FROM language_partners WHERE email=?");
 $stmt->bind_param("s", $email);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -32,25 +32,23 @@ if ($result->num_rows > 0) {
     $row = $result->fetch_assoc();
     // Verify the password
     if (password_verify($password, $row['password'])) {
+        // Start session
+        session_start();
         // Store user's name in the session
         $_SESSION['userName'] = $row['first_name']; // Assuming the first name is stored in the database
         // Redirect to the home page
-        header("Location: ../LearnerPages/HomePageLerner.php");
+        header("Location: ../nativePages/HomePageNative.html");
         exit();
     } else {
         // Password is incorrect
-        $_SESSION['error'] = "Incorrect password";
+        echo "<script>alert('Incorrect password');</script>";
     }
 } else {
     // Email is not registered
-    $_SESSION['error'] = "Email not registered";
+    echo "<script>alert('Email not registered');</script>";
 }
 
 // Close connection
 $stmt->close();
 $conn->close();
-
-// Redirect back to the login form with error message appended to URL
-header("Location: loginLF.php?error=" . urlencode($_SESSION['error']));
-exit();
 ?>

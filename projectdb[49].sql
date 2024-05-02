@@ -32,7 +32,7 @@ CREATE TABLE `language_learners` (
   `last_name` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
-  `photo` longblob NOT NULL,
+  `photo` longblob ,
   `city` varchar(50) NOT NULL,
   `location` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -50,7 +50,7 @@ CREATE TABLE `language_partners` (
   `age` int(111) NOT NULL,
   `gender` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
-  `photo` longblob NOT NULL,
+  `photo` longblob ,
   `password` varchar(100) NOT NULL,
   `phone` varchar(100) NOT NULL,
   `city` varchar(50) NOT NULL,

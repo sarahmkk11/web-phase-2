@@ -115,6 +115,15 @@
 
 <body>
   <h1 class="signup-heading">Signup</h1>
+
+  <?php
+    // Check if an error message is passed through the URL
+    if (isset($_GET['error'])) {
+      // Display the error message as an alert
+      echo "<script>alert('" . $_GET['error'] . "');</script>";
+    }
+  ?>
+  
   <form method="POST" action="signUpL.php" onsubmit="return validateForm()" enctype="multipart/form-data">
 
     <label for="first_name" class="required-label">First Name:</label>

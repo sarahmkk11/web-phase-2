@@ -163,15 +163,12 @@
 <body>
   <h1>Signup</h1>
   <form method="POST" action="../nativePages/HomePageNative.html" onsubmit="return validateForm()">
-    <label for="firstName">First Name<span style="color: red;">*</span>:</label>
-    <input type="text" id="firstName" name="firstName" oninput="validateFirstName()">
-
-
-
+    <label for="first_name">First Name<span style="color: red;">*</span>:</label>
+    <input type="text" id="first_name" name="first_name" oninput="validateFirstName()">
     <span id="firstNameError" class="error"></span><br><br>
 
-    <label for="lastName">Last Name<span style="color: red;">*</span>:</label>
-    <input type="text" id="lastName" name="lastName" oninput="validateLastName()">
+    <label for="last_name">Last Name<span style="color: red;">*</span>:</label>
+    <input type="text" id="last_name" name="last_name" oninput="validateLastName()">
     <span id="lastNameError" class="error"></span><br><br>
 
     <label for="age">Select your age<span style="color: red;">*</span>:</label>
