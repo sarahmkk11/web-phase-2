@@ -17,7 +17,7 @@ if ($conn->connect_error) {
 }
 
 // Get form data
-$firstName = isset($_POST['first_name']) ? $_POST['firs_name'] : '';
+$firstName = isset($_POST['first_name']) ? $_POST['first_name'] : '';
 $lastName = isset($_POST['last_name']) ? $_POST['last_name'] : '';
 $age = isset($_POST['age']) ? $_POST['age'] : '';
 $gender = isset($_POST['gender']) ? $_POST['gender'] : '';
@@ -27,29 +27,36 @@ $phone = isset($_POST['phone']) ? $_POST['phone'] : '';
 $city = isset($_POST['city']) ? $_POST['city'] : '';
 $shortBio = isset($_POST['short-bio']) ? $_POST['short-bio'] : '';
 
+
+
 // Check if file is uploaded
-if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
+if (isset($_FILES['photo'])) {
+    // Check for file upload error
+if ($_FILES['photo']['error'] === UPLOAD_ERR_OK){
     // Handle file upload
     $photoName = $_FILES['photo']['name'];
     $photoTmpName = $_FILES['photo']['tmp_name'];
     $photoSize = $_FILES['photo']['size'];
     $photoError = $_FILES['photo']['error'];
 
-    // Check if file is actually uploaded
-    if (is_uploaded_file($photoTmpName)) {
         // Move uploaded file to desired location
         $photoDestination = 'uploads/' . $photoName;
         if (!move_uploaded_file($photoTmpName, $photoDestination)) {
             echo "Error moving file to destination";
             exit(); // Exit script
         }
-    } else {
-        echo "Error uploading file";
+    } elseif ($_FILES['photo']['error'] !== UPLOAD_ERR_NO_FILE) {
+        // Handle file upload error
+        echo "Error uploading file: " . $_FILES['photo']['error'];
         exit(); // Exit script
+    } else {
+        // No file uploaded
+        $photoDestination = ''; // Assign an empty string or default value
     }
-} else {
-    // No file uploaded
-    $photoDestination = ''; // Set to empty string
+ } else {
+    // Handle case where 'photo' key is not set in $_FILES
+    echo "No file uploaded";
+    exit(); // Exit script
 }
 
 // Check if email already exists
@@ -74,7 +81,7 @@ if ($result->num_rows > 0) {
     // Execute the statement
     if ($stmt->execute()) {
         // Redirect to login page
-        header("Location: loginN.html");
+        header("Location: loginNF.php");
         exit();
     } else {
         echo "Error: " . $stmt->error;

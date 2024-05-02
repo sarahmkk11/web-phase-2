@@ -1,3 +1,12 @@
+<?php 
+    session_start();
+
+    if(!isset($_SESSION['userName']))
+      header("Location:../homePage/loginLF.php?error=Please Sign In again!");
+
+    else{
+
+      ?>
 <!DOCTYPE html>
 <html>
 
@@ -61,17 +70,7 @@
   
 	<div class="container">
     <div class="text">
-      <?php
-      // Start session
-      session_start();
-      // Check if the user's name is set in the session
-      if (isset($_SESSION['userName'])) {
-          echo "<h1>Welcome, " . $_SESSION['userName'] . "!</h1>";
-      } else {
-          // Default welcome message if user is not logged in
-          echo "<h1>Speak with tandem</h1>";
-      }
-      ?>
+      <?php echo "<h1>Welcome, " . $_SESSION['userName'] . "!</h1>"; ?>
       <p>Master any language by actually chatting with real people</p>
   </div>
   
@@ -189,5 +188,7 @@
   </html>
   
   
-
+  <?php 
+    }
+?>
     

@@ -1,3 +1,13 @@
+<?php 
+    session_start();
+
+    if(!isset($_SESSION['userName']))
+      header("Location:../homePage/loginNF.php?error=Please Sign In again!");
+
+    else{
+
+      ?>
+
 <!DOCTYPE html>
 <html>
 
@@ -52,7 +62,7 @@
                 
                 <li><a href="NativeProfile.html">Manage Profile</a></li>
              
-                <li><a href="../homePage/HomePage.html">Sign Out</a></li>
+                <li><a href="signOutN.php">Sign Out</a></li>
             </ul> 
         </nav>
         
@@ -61,15 +71,14 @@
                <!-- container  -->
 
 
-               <div class="contain">
-                <div class="Teach">
-                    <h1 >Teach with us</h1>
-                    <p >Welcome Sara, to our vibrant community of language educators! </p>
+        <div class="contain">
+           <div class="Teach">
+             <?php echo "<h1>Welcome, " . $_SESSION['userName'] . "!</h1>";?>
+                <p > to our vibrant community of language educators! </p>
                 </div>
                 <div class="Native">
                     <img src="laptop-provider-visit-lg2 (2).png" alt="Language Learner">
                 </div>
-                
             </div>
 
 <!-- <div class="a">
@@ -160,3 +169,6 @@
       </footer> 
       </body>
 </html>
+<?php 
+    }
+?>

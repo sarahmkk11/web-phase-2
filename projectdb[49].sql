@@ -44,7 +44,6 @@ CREATE TABLE `language_learners` (
 --
 
 CREATE TABLE `language_partners` (
-  `partner_id` int(11) NOT NULL,
   `first_name` varchar(50) NOT NULL,
   `last_name` varchar(50) NOT NULL,
   `age` int(111) NOT NULL,
@@ -63,10 +62,7 @@ CREATE TABLE `language_partners` (
 
 --
 -- Indexes for table `language_partners`
---
-ALTER TABLE `language_partners`
-  ADD PRIMARY KEY (`partner_id`);
-COMMIT;
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

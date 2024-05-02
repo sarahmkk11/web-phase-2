@@ -1,3 +1,14 @@
+<?php
+session_start();
+
+if (isset($_SESSION['userName'])) {
+  // User already logged in, redirect to HomePageLerner.php
+  header("Location:../LearnerPages/HomePageLerner.php");
+  exit;
+}
+?>
+
+
 <!DOCTYPE html>
 <html>
 

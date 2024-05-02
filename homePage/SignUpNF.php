@@ -162,7 +162,14 @@
 
 <body>
   <h1>Signup</h1>
-  <form method="POST" action="../nativePages/HomePageNative.html" onsubmit="return validateForm()">
+  <?php
+    // Check if an error message is passed through the URL
+    if (isset($_GET['error'])) {
+      // Display the error message as an alert
+      echo "<script>alert('" . $_GET['error'] . "');</script>";
+    }
+  ?>
+  <form method="POST" action="SignUpN.php" onsubmit="return validateForm()" enctype="multipart/form-data">
     <label for="first_name">First Name<span style="color: red;">*</span>:</label>
     <input type="text" id="first_name" name="first_name" oninput="validateFirstName()">
     <span id="firstNameError" class="error"></span><br><br>

@@ -1,6 +1,6 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+session_start();
+
 
 // Database connection parameters
 $servername = "localhost";
@@ -37,18 +37,23 @@ if ($result->num_rows > 0) {
         // Store user's name in the session
         $_SESSION['userName'] = $row['first_name']; // Assuming the first name is stored in the database
         // Redirect to the home page
-        header("Location: ../nativePages/HomePageNative.html");
+        header("Location: ../nativePages/HomePageNative.php");
         exit();
     } else {
         // Password is incorrect
-        echo "<script>alert('Incorrect password');</script>";
+        $_SESSION['error'] = "Incorrect password";
     }
 } else {
     // Email is not registered
-    echo "<script>alert('Email not registered');</script>";
+    $_SESSION['error'] = "Email not registered";
 }
 
 // Close connection
 $stmt->close();
 $conn->close();
+
+
+// Redirect back to the login form with error message appended to URL
+header("Location: loginNF.php?error=" . urlencode($_SESSION['error']));
+exit();
 ?>
