@@ -39,16 +39,26 @@
     }
 
     function validateAge() {
-      var age = document.getElementById("age").value;
-      var ageError = document.getElementById("ageError");
-      if (age === "") {
-        ageError.innerText = "Age is required";
-        return false;
-      } else {
-        ageError.innerText = "";
-        return true;
-      }
-    }
+  var age = document.getElementById("age").value;
+  var ageError = document.getElementById("ageError");
+  
+  // Check if age is empty
+  if (age === "") {
+    ageError.innerText = "Age is required";
+    return false;
+  } 
+  // Check if age contains only numbers
+  else if (!/^\d+$/.test(age)) {
+    ageError.innerText = "Please enter a valid age (only numbers)";
+    return false;
+  } 
+  // Age is valid
+  else {
+    ageError.innerText = "";
+    return true;
+  }
+}
+
 
     function validateGender() {
       var gender = document.querySelector('input[name="gender"]:checked');
@@ -178,15 +188,10 @@
     <input type="text" id="last_name" name="last_name" oninput="validateLastName()">
     <span id="lastNameError" class="error"></span><br><br>
 
-    <label for="age">Select your age<span style="color: red;">*</span>:</label>
-    <select id="age" name="age" onchange="validateAge()">
-      <option value="">Please select</option>
-      <option value="0-17">Under 18</option>
-      <option value="18-30">18-30</option>
-      <option value="31-50">31-50</option>
-      <option value="51-100">51-100</option>
-    </select>
-    <span id="ageError" class="error"></span><br><br>
+    <label for="age">Age<span style="color: red;">*</span>:</label>
+<input type="number" id="age" name="age" oninput="validateAge()">
+<span id="ageError" class="error"></span><br><br>
+
 
     <label for="gender">Gender<span style="color: red;">*</span>:</label>
     <input type="radio" name="gender" value="male" onchange="validateGender()">Male
