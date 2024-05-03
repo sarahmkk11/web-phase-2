@@ -12,7 +12,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 
 // Test database connection
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+die("Connection failed: " . $conn->connect_error);
 }
 
 // Get form data
@@ -28,22 +28,22 @@ $result = $stmt->get_result();
 
 // Check if the email exists in the database
 if ($result->num_rows > 0) {
-    // Fetch the user data
-    $row = $result->fetch_assoc();
-    // Verify the password
-    if (password_verify($password, $row['password'])) {
-        // Store user's name in the session
-        $_SESSION['userName'] = $row['first_name']; // Assuming the first name is stored in the database
-        // Redirect to the home page
-        header("Location: ../LearnerPages/HomePageLerner.php");
-        exit();
-    } else {
-        // Password is incorrect
-        $_SESSION['error'] = "Incorrect password";
-    }
+// Fetch the user data
+$row = $result->fetch_assoc();
+// Verify the password
+if (password_verify($password, $row['password'])) {
+// Store user's name in the session
+$_SESSION['userName'] = $row['first_name']; // Assuming the first name is stored in the database
+// Redirect to the home page
+header("Location: ../LearnerPages/HomePageLerner.php");
+exit();
 } else {
-    // Email is not registered
-    $_SESSION['error'] = "Email not registered";
+// Password is incorrect
+$_SESSION['error'] = "Incorrect password";
+}
+} else {
+// Email is not registered
+$_SESSION['error'] = "Email not registered";
 }
 
 // Close connection
