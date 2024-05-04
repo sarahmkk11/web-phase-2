@@ -58,7 +58,7 @@
                 </div>
                 </li>
                 
-                <li><a href="LearnerProfile.html">Manage Profile</a></li>
+                <li><a href="LearnerProfile.php">Manage Profile</a></li>
              
                 <li><a href="signOutL.php">Sign Out</a></li>
             </ul> 
