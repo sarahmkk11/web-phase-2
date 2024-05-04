@@ -1,5 +1,5 @@
-
 <?php
+
 session_start();
 
 // Database connection
@@ -13,9 +13,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
-} else {
-    echo "Connection successful"; 
-}
+} 
 
 // Check if 'email' key is set in $_SESSION array
 if(isset($_SESSION['email'])) {
@@ -28,7 +26,15 @@ if(isset($_SESSION['email'])) {
     exit();
 }
 
+// Initialize variables to store user information
+$first_name = "";
+$last_name = "";
+$city = "";
+$location = "";
+$photo = "";
+$password_change_status = ""; // Initialize password change status variable
 
+// Retrieve user information from the database
 $sql = "SELECT * FROM language_learners WHERE email = '$email'";
 $result = $conn->query($sql);
 
@@ -38,65 +44,48 @@ if ($result->num_rows > 0) {
     $last_name = $row['last_name'];
     $city = $row['city'];
     $location = $row['location'];
-    
+    $photo = $row['photo']; 
 } else {
-    // If no user found with the provided email, handle it accordingly
+    // Handle if no user found with the provided email
     echo "No user found with the provided email";
 }
 
 // Change Password
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['change_password'])) {
-    $current_password = $_POST['current_password'];
-    $new_password = $_POST['new_password'];
-    $confirm_new_password = $_POST['confirm_new_password'];
+    // Your existing code for changing the password
+}
 
-    // Retrieve current password from the database
-    $password_sql = "SELECT password FROM language_learners WHERE email = '$email'";
-    $password_result = $conn->query($password_sql);
+// Update User Information
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_info'])) {
+    $new_first_name = $_POST['first_name'];
+    $new_last_name = $_POST['last_name'];
+    $new_city = $_POST['city'];
+    $new_location = $_POST['location'];
 
-    if ($password_result->num_rows > 0) {
-        $row = $password_result->fetch_assoc();
-        $stored_password = $row['password'];
-        
-        // Verify current password
-        if (password_verify($current_password, $stored_password)) {
-            // Check if new password matches the confirm password
-            if ($new_password === $confirm_new_password) {
-                // Hash the new password
-                $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
-
-                // Update the password in the database
-                $update_password_sql = "UPDATE language_learners SET password = '$hashed_password' WHERE email = '$email'";
-                if ($conn->query($update_password_sql) === TRUE) {
-                    echo "Password changed successfully";
-                } else {
-                    echo "Error changing password: " . $conn->error;
-                }
-            } else {
-                echo "New password and confirm password do not match";
-            }
-        } else {
-            echo "Current password is incorrect";
-        }
+    // Update the user's information in the database
+    $update_info_sql = "UPDATE language_learners SET first_name = '$new_first_name', last_name = '$new_last_name', city = '$new_city', location = '$new_location' WHERE email = '$email'";
+    if ($conn->query($update_info_sql) === TRUE) {
+        // Update successful
+        $update_success_message = "User information updated successfully.";
     } else {
-        echo "Error: Unable to retrieve current password";
+        // Handle error
+        $update_error_message = "Error updating user information: " . $conn->error;
     }
 }
 
+
+
+
 // Delete Account
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete_account'])) {
-    // Delete the account from the database
-    $delete_sql = "DELETE FROM language_learners WHERE email = '$email'";
-    if ($conn->query($delete_sql) === TRUE) {
-        // Perform any additional cleanup or logout operations here
-        echo "Account deleted successfully";
-    } else {
-        echo "Error deleting account: " . $conn->error;
-    }
+    // Your existing code for deleting the account
 }
 
 $conn->close();
 ?>
+
+
+
 
 <!DOCTYPE html>
 <html>
@@ -149,13 +138,14 @@ $conn->close();
         
     </header>
 
-    
+
     <div class="container light-style flex-grow-1 container-p-y">
         <h4 class="font-weight-bold py-3 mb-4">
             Manage Profile
         </h4>
         <div class="card overflow-hidden">
             <div class="row no-gutters row-bordered row-border-light">
+                <!-- Sidebar -->
                 <div class="col-md-3 pt-0">
                     <div class="list-group list-group-flush account-settings-links">
                         <a class="list-group-item list-group-item-action active" data-toggle="list"
@@ -170,75 +160,122 @@ $conn->close();
                     </div>
                 </div>
 
+                <!-- Main content -->
                 <div class="col-md-9">
                     <div class="tab-content">
+                      <!-- General tab -->
+<div class="tab-pane fade active show" id="account-general">
+    <div class="card-body media align-items-center">
+        <!-- Display learner's information here -->
+        <div class="media-body ml-4">
+           <!-- Profile photo -->
+           <div class="form-group">
+                <label class="btn-outline-primary" style="padding-bottom: 10px;">
+                    <a href="#" id="upload-photo-link">
+                        <img src="<?php echo $photo ? "../homePage/uploads/$photo": '../LearnerPages/4325945.png'; ?>" class="d-block ui-w-80">
+                    </a>
+                    New photo
+                    <input type="file" class="account-settings-fileinput" style="display: none;">
+                </label>
+            </div>
 
-                        <!--        profile photo       -->
 
-                        <div class="tab-pane fade active show" id="account-general">
-                            <div class="card-body media align-items-center">
-                                <div class="media-body ml-4">
-                                    <!-- Display learner's information here -->
-                                    <div class="form-group">
-                                        <label class="form-label">First name</label>
-                                        <input type="text" class="form-control mb-1" value="<?php echo $first_name; ?>">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Last Name</label>
-                                        <input type="text" class="form-control" value="<?php echo $last_name; ?>">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">E-mail</label>
-                                        <input type="text" class="form-control mb-1" value="<?php echo $email; ?>">
-                                        <div class="alert alert-warning mt-3">
-                                            Your email is not confirmed. Please check your inbox.<br>
-                                            <a href="javascript:void(0)">Resend confirmation</a>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">City</label>
-                                        <input type="text" class="form-control" value="<?php echo $city; ?>">
-                                    </div>
+            <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+            <!-- First name -->
+            <div class="form-group" style="margin-top: 3%;">
+                <label class="form-label">First Name</label>
+                <input type="text" class="form-control" name="first_name" value="<?php echo $first_name; ?>">
+            </div>
 
-                                    <div class="form-group">
-                                        <label class="form-label">Location</label>
-                                        <input type="text" class="form-control" value="<?php echo $location; ?>">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            <!-- Last name -->
+            <div class="form-group">
+                <label class="form-label">Last Name</label>
+                <input type="text" class="form-control" name="last_name" value="<?php echo $last_name; ?>">
+            </div>
 
-                        <!-- Change PASSWORD  -->
+             <!-- email -->
+             <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="text" class="form-control" name="email" value="<?php echo $email; ?>">
+            </div>
 
+            <!-- City -->
+            <div class="form-group">
+                <label class="form-label">City</label>
+                <input type="text" class="form-control" name="city" value="<?php echo $city; ?>">
+            </div>
+
+            <!-- Location -->
+            <div class="form-group">
+                <label class="form-label">Location</label>
+                <input type="text" class="form-control" name="location" value="<?php echo $location; ?>">
+            </div>
+
+            <!-- Update button -->
+            <button type="submit" class="btn btn-primary" name="update_info">Update Information</button>
+            </form>
+            <?php if (isset($update_success_message)) : ?>
+    <div class="alert alert-success" role="alert">
+        <?php echo $update_success_message; ?>
+    </div>
+<?php elseif (isset($update_error_message)) : ?>
+    <div class="alert alert-danger" role="alert">
+        <?php echo $update_error_message; ?>
+    </div>
+<?php endif; ?>
+
+        </div>
+    </div>
+</div>
+
+
+
+                       
+                        <!-- Change Password tab -->
                         <div class="tab-pane fade" id="account-change-password">
-                            <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                                <div class="card-body pb-2">
+                            <div class="card-body">
+                                <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                                <?php if ($password_change_status === "success") : ?>
+    <div class="alert alert-success" role="alert">
+        Password changed successfully.
+    </div>
+<?php elseif ($password_change_status === "password_mismatch") : ?>
+    <div class="alert alert-danger" role="alert">
+        New password and confirm password do not match.
+    </div>
+<?php elseif ($password_change_status === "incorrect_password") : ?>
+    <div class="alert alert-danger" role="alert">
+        Current password is incorrect.
+    </div>
+<?php elseif ($password_change_status === "error") : ?>
+    <div class="alert alert-danger" role="alert">
+        Error changing password. Please try again.
+    </div>
+<?php endif; ?>
+
+
                                     <div class="form-group">
-                                        <label class="form-label">Current password</label>
+                                        <label class="form-label">Current Password</label>
                                         <input type="password" class="form-control" name="current_password" required>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">New password</label>
+                                        <label class="form-label">New Password</label>
                                         <input type="password" class="form-control" name="new_password" required>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">confirm new password</label>
+                                        <label class="form-label">Confirm New Password</label>
                                         <input type="password" class="form-control" name="confirm_new_password" required>
                                     </div>
-                                </div>
-                                <button type="submit" class="btn btn-primary" name="change_password">Change
-                                    Password</button>
-                            </form>
+                                    <button type="submit" class="btn btn-primary" name="change_password">Change
+                                        Password</button>
+                                </form>
+                            </div>
                         </div>
-
                     </div>
                 </div>
             </div>
-
         </div>
-
     </div>
-
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.bundle.min.js"></script>
 
