@@ -60,7 +60,7 @@
                 </div>
                 </li>
                 
-                <li><a href="NativeProfile.html">Manage Profile</a></li>
+                <li><a href="NativeProfile.php">Manage Profile</a></li>
              
                 <li><a href="signOutN.php">Sign Out</a></li>
             </ul> 
