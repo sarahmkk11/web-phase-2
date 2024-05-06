@@ -270,7 +270,7 @@ $conn->close();
                                     <div class="form-group">
                                         <label class="btn-outline-primary" style="padding-bottom: 10px;">
                                             <a href="#" id="upload-photo-link">
-                                                <img src="<?php echo $photo ? "../homePage/uploads/$photo" : '../LearnerPages/4325945.png'; ?>"
+                                                <img src="<?php echo $photo ? "../homePage/$photo" : '../LearnerPages/4325945.png'; ?>"
                                                     class="d-block ui-w-80">
                                             </a>
                                             New photo
