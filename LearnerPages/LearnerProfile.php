@@ -55,6 +55,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update_info'])) {
     // Initialize update error message
     $update_error_message = "";
 
+    // Handle photo upload if file is present
+    if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
+        $photo_tmp_name = $_FILES['photo']['tmp_name'];
+        $photo_name = $_FILES['photo']['name'];
+        $photo_destination = "../homePage/uploads/$photo_name"; // Adjusted destination path
+
+        // Move uploaded file to desired destination
+        if (!move_uploaded_file($photo_tmp_name, $photo_destination)) {
+            $update_error_message .= "Error uploading photo. ";
+        } else {
+            // Update the photo field in the database
+            $photo_update_sql = "UPDATE language_learners SET photo = '$photo_name' WHERE email = '$email'";
+            if ($conn->query($photo_update_sql) !== TRUE) {
+                $update_error_message .= "Error updating photo. ";
+            }
+        }
+    }
+
     // Validate first name
     if (!preg_match("/^[a-zA-Z]*$/", $_POST['first_name'])) {
         $update_error_message .= "Error updating user information. ";
@@ -138,7 +156,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['change_password'])) {
     }
 
     // Store the active tab in a session variable
-$_SESSION['active_tab'] = 'change-password';
+    $_SESSION['active_tab'] = 'change-password';
 }
 
 // Delete User Account
@@ -192,7 +210,7 @@ $conn->close();
 
         <nav class="mainMenu">
             <ul>
-                <li><a href="#">Home</a></li>
+                <li><a href="LearnerProfile.php">Home</a></li>
 
                 <li class="dropdown">
                     <a href="#">Request</a>
@@ -270,17 +288,17 @@ $conn->close();
                                     <div class="form-group">
                                         <label class="btn-outline-primary" style="padding-bottom: 10px;">
                                             <a href="#" id="upload-photo-link">
-                                                <img src="<?php echo $photo ? "../homePage/$photo" : '../LearnerPages/4325945.png'; ?>"
-                                                    class="d-block ui-w-80">
+                                                <img src="<?php echo $photo ? "../homePage/$photo" : '../LearnerPages/4325945.png'; ?>"id="profile-photo" class="d-block ui-w-80">
                                             </a>
-                                            New photo
-                                            <input type="file" class="account-settings-fileinput"
-                                                style="display: none;">
+                                            <span class="upload-text" style="color: white;">Upload New Photo</span>
+                                            <input type="file" class="account-settings-fileinput" name="photo"
+                                                accept="image/*" style="display: none; ">
                                         </label>
                                     </div>
+
                                     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                                         <!-- First name -->
-                                        <div class="form-group" style="margin-top: 3%;">
+                                        <div class="form-group" style="margin-top: -3%;">
                                             <label class="form-label">First Name</label>
                                             <input type="text" class="form-control" name="first_name"
                                                 value="<?php echo $first_name; ?>">
@@ -322,7 +340,7 @@ $conn->close();
                         <!-- Change Password tab -->
                         <div class="tab-pane fade" id="account-change-password">
                             <div class="card-body">
-                            <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                                <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
                                     <!-- Error message -->
                                     <?php if (!empty($password_change_error_message)): ?>
                                         <div class="alert alert-danger" role="alert">
@@ -374,15 +392,15 @@ $conn->close();
     </footer>
 
 
-     <!--  set the active tab -->
-     <script>
-    // Check if there's an active tab stored in session
-    var activeTab = "<?php echo isset($_SESSION['active_tab']) ? $_SESSION['active_tab'] : 'general'; ?>";
+    <!--  set the active tab -->
+    <script>
+        // Check if there's an active tab stored in session
+        var activeTab = "<?php echo isset($_SESSION['active_tab']) ? $_SESSION['active_tab'] : 'general'; ?>";
 
-    // Show the active tab
-    $('.nav-link[href="#' + activeTab + '"]').tab('show');
+        // Show the active tab
+        $('.nav-link[href="#' + activeTab + '"]').tab('show');
 
-</script>
+    </script>
 
     <script>
         // Function to hide error and success messages after a certain duration
@@ -408,6 +426,14 @@ $conn->close();
 
         // Call the hideMessages function when the page is loaded
         window.onload = hideMessages;
+    </script>
+    <script>
+        // Function to handle click event on profile photo
+        document.getElementById('upload-photo-link').addEventListener('click', function () {
+            document.getElementById('photo-upload-input').click();
+        });
+
+
     </script>
 
 
