@@ -230,22 +230,22 @@ $conn->close();
 
         <nav class="mainMenu">
             <ul>
-                <li><a href="HomePageNative.html">Home</a></li>
+                <li><a href="HomePageNative.php">Home</a></li>
 
                 <li class="dropdown">
                     <a href="#">Requests</a>
                     <div class="dropdown-content">
-                        <a href="LearningRequestList.html">Request List</a>
-                        <a href="HomePageNative.html##view_Request"> Request Status</a>
-                        <a href="HomePageNative.html#Accept-Rej">Learner Requests</a>
+                        <a href="LearningRequestList.php">Request List</a>
+                        <a href="HomePageNative.php##view_Request"> Request Status</a>
+                        <a href="HomePageNative.php#Accept-Rej">Learner Requests</a>
                     </div> 
                 </li>
                 <li class="dropdown">
                 <a href="#">View</a>
                 <div class="dropdown-content">
-                    <a href="PreviousSessionsN.html">Previous Session</a>
-                    <a href="CuSessionN.html">Current Session</a>
-                    <a href="viewReviews.html">Reviews</a>
+                    <a href="PreviousSessionsN.php">Previous Session</a>
+                    <a href="CuSessionN.php">Current Session</a>
+                    <a href="viewReviews.php">Reviews</a>
                 </div>
                 </li>
                 
