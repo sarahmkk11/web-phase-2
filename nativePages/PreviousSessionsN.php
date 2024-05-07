@@ -278,7 +278,7 @@ if(isset($_SESSION['language_partners_email'])) {
     $servername = "localhost";
     $username = "root";
     $password = "";
-    $dbname = "web2";
+    $dbname = "projectdb ";
 
     // Create connection
     $conn = new mysqli($servername, $username, $password, $dbname);
