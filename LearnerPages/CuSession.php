@@ -60,28 +60,28 @@
 
         <nav class="mainMenu">
             <ul>
-                <li><a href="HomePageLerner.html">Home</a></li>
+                <li><a href="HomePageLerner.php">Home</a></li>
 
                 <li class="dropdown">
-                    <a href="HomePageLerner.html#Request">Request</a>
+                    <a href="HomePageLerner.php#Request">Request</a>
                     <div class="dropdown-content">
-                        <a href="HomePageLerner.html#new-Request">New</a>
-                        <a href="HomePageLerner.html#Current">Current</a>
+                        <a href="HomePageLerner.php#new-Request">New</a>
+                        <a href="HomePageLerner.php#Current">Current</a>
                     </div> 
                 </li>
                 <li class="dropdown">
                 <a href="#">View</a>
                 <div class="dropdown-content">
-                    <a href="PartnerList.html">Language Partners</a>
+                    <a href="PartnerList.php">Language Partners</a>
                     <a href="PreviousSession.php">Previous Session</a>
                     <a href="CuSession.php">Current Session</a>
                     <a href="RateReviews .php">Rate and review</a>
                 </div>
                 </li>
                 
-                <li><a href="LearnerProfile.html">Manage Profile</a></li>
+                <li><a href="LearnerProfile.php">Manage Profile</a></li>
              
-                <li><a href="../homePage/HomePage.html">Sign Out</a></li>
+                <li><a href="../homePage/HomePage.php">Sign Out</a></li>
             </ul> 
         </nav>
     </header>
