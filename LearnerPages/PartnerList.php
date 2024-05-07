@@ -103,8 +103,8 @@ if( isset($_REQUEST['messageidforlarner'])){
                     <li class="dropdown">
                         <a href="#">Request</a>
                         <div class="dropdown-content">
-                            <a href="HomePageLerner.html#new-Request">New</a>
-                            <a href="HomePageLerner.html#Current">Current</a>
+                            <a href="HomePageLerner.php#new-Request">New</a>
+                            <a href="HomePageLerner.php#Current">Current</a>
                         </div> 
                     </li>
                     <li class="dropdown">
@@ -119,7 +119,7 @@ if( isset($_REQUEST['messageidforlarner'])){
                     </li>
                     
                   
-                <li><a href="LearnerProfile.html">Manage Profile</a></li>
+                <li><a href="LearnerProfile.php">Manage Profile</a></li>
              
              <li><a href="signOutL.php">Sign Out</a></li>
                 </ul> 
