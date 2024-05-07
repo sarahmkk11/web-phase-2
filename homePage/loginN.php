@@ -35,7 +35,11 @@ if ($result->num_rows > 0) {
         // Start session
         session_start();
         // Store user's name in the session
+
         $_SESSION['userName'] = $row['first_name']; // Assuming the first name is stored in the database
+        $_SESSION['lastName'] = $row['last_name']; // Assuming the first name is stored in the database
+        $_SESSION['photo'] = $row['photo']; // Assuming the first name is stored in the database
+        $_SESSION['email'] = $row['email']; // Assuming the first name is stored in the database
         // Redirect to the home page
         header("Location: ../nativePages/HomePageNative.php");
         exit();

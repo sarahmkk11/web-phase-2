@@ -34,8 +34,11 @@ $row = $result->fetch_assoc();
 if (password_verify($password, $row['password'])) {
 // Store user's email in the session
 $_SESSION['email'] = $email;
+
     // Store user's name in the session
 $_SESSION['userName'] = $row['first_name']; // Assuming the first name is stored in the database
+$_SESSION['lastName'] = $row['last_name']; // Assuming the first name is stored in the database
+$_SESSION['photo'] = $row['photo']; // Assuming the first name is stored in the database
 // Redirect to the home page
 header("Location: ../LearnerPages/HomePageLerner.php");
 exit();
