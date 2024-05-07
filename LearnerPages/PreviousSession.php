@@ -240,13 +240,13 @@
 
         <nav class="mainMenu">
             <ul>
-                <li><a href="HomePageNative.html">Home</a></li>
+                <li><a href="HomePageNative.php">Home</a></li>
                 <li class="dropdown">
                     <a href="#">Requests</a>
                     <div class="dropdown-content">
-                        <a href="LearningRequestList.html">Request List</a>
-                        <a href="HomePageNative.html##view_Request">Request Status</a>
-                        <a href="HomePageNative.html#Accept-Rej">Learner Requests</a>
+                        <a href="LearningRequestList.php">Request List</a>
+                        <a href="HomePageNative.php##view_Request">Request Status</a>
+                        <a href="HomePageNative.php#Accept-Rej">Learner Requests</a>
                     </div>
                 </li>
                 <li class="dropdown">
@@ -257,8 +257,8 @@
                         <a href="viewReviews.php">Reviews</a>
                     </div>
                 </li>
-                <li><a href="NativeProfile.html">Manage Profile</a></li>
-                <li><a href="../homePage/HomePage.html">Sign Out</a></li>
+                <li><a href="NativeProfile.php">Manage Profile</a></li>
+                <li><a href="../homePage/HomePage.php">Sign Out</a></li>
             </ul>
         </nav>
     </header>
