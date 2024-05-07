@@ -252,9 +252,9 @@
                 <li class="dropdown">
                     <a href="#">View</a>
                     <div class="dropdown-content">
-                        <a href="PreviousSessionsN.html">Previous Session</a>
-                        <a href="CuSessionN.html">Current Session</a>
-                        <a href="viewReviews.html">Reviews</a>
+                        <a href="PreviousSessionsN.php">Previous Session</a>
+                        <a href="CuSessionN.php">Current Session</a>
+                        <a href="viewReviews.php">Reviews</a>
                     </div>
                 </li>
                 <li><a href="NativeProfile.html">Manage Profile</a></li>
