@@ -100,7 +100,7 @@ if(isset($_GET['language_Learner_email'])) {
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "web2";
+$dbname = "projectdb ";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
