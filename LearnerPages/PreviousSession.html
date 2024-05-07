@@ -1,103 +1,346 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Previous Sessions</title>
-    <meta name="description" content="hi languege speaker! what do you whant to do ?" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"><!--Setting the viewport to make your website look good on all devices:-->
-    <meta name="keywords" content="Learn, Languages, education ">
-    <link rel="stylesheet" hreflink rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous"="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> <!--to use icons -->
-    <link rel="shortcut icon" href="../homePage/Logo white .jpeg" type="image/x-icon">
-    <link rel="stylesheet" href="HomePageLerner.css">
-    
-   
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="PreviousSessionN.css">
+    <style>
+        /* Paste the provided CSS here */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #8fe2f5, #858bef);
+            width: 100%;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 100px;
+            height: auto;
+            margin-right: 10px;
+        }
+
+        .logo h1 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 10px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #f3f3f3;
+            padding: 5px;
+            font-size: 16px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        nav ul li a:hover {
+            background-color: #273e81;
+            color: #ffffff;
+        }
+
+        /* Main Menu */
+        .mainMenu {
+            top: 10px;
+            right: 10px;
+        }
+
+        .mainMenu ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .mainMenu ul li {
+            margin-left: 10px;
+            position: relative;
+        }
+
+        .mainMenu ul li a {
+            text-decoration: none;
+            color: #f3f3f3;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            transition: background-color 0.3s, transform 0.3s;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .mainMenu ul li a:hover {
+            background-color: #273e81;
+            color: #ffffff;
+            transform: scale(1.1);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: linear-gradient(135deg,#5fc6dd,#6167d3 );  
+            min-width: 120px;
+            border-radius: 5px;
+            z-index: 1;
+            top: 100%;
+            left: 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 10px 0;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s, transform 0.3s;
+            transform: translateY(-10px);
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        .dropdown-content a {
+            color: #ffffff;
+            padding: 10px 20px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Table */
+        h1 {
+            text-align: center;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #8a95e4;
+            color: #333;
+            text-align: center;
+        }
+
+        tr:nth-child(even) {
+            background-color: #c0c4f8;
+        }
+
+        tr:hover {
+            background-color: #91dcf9;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg,#8FE2F5,#858BEF);
+            padding: 20px;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .social-icons .icon {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background-color: #fff;
+            text-align: center;
+            line-height: 40px;
+            font-size: 18px;
+            margin: 0 5px;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+        }
+
+        .social-icons .icon i {
+            color:#858BEF ;
+        }
+
+        .social-icons .icon:hover {
+            background-color:#8FE2F5;
+        }
+
+        .social-icons .icon:hover i {
+            color: #fff;
+        }
+
+        .footer .email {
+            color: #555555;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .footer .email a {
+            color: #858BEF;
+            text-decoration: none;
+        }
+
+        .footer .email a:hover {
+            text-decoration: underline;
+        }
+
+        .footer .copyright {
+            color: #555555;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
     <header>
         <div class="logo">
-            <img src="../homePage/logo bule.jpeg">
+            <img src="../homePage/logo bule.jpeg" alt="Logo">
             <h1>Talk Tandem</h1>
         </div>
 
         <nav class="mainMenu">
             <ul>
-                <li><a href="HomePageLerner.html">Home</a></li>
-
+                <li><a href="HomePageNative.html">Home</a></li>
                 <li class="dropdown">
-                    <a href="#">Request</a>
+                    <a href="#">Requests</a>
                     <div class="dropdown-content">
-                        <a href="HomePageLerner.html#new-Request">New</a>
-                        <a href="HomePageLerner.html#Current">Current</a>
-                    </div> 
+                        <a href="LearningRequestList.html">Request List</a>
+                        <a href="HomePageNative.html##view_Request">Request Status</a>
+                        <a href="HomePageNative.html#Accept-Rej">Learner Requests</a>
+                    </div>
                 </li>
                 <li class="dropdown">
-                <a href="#">View</a>
-                <div class="dropdown-content">
-                    <a href="PartnerList.html">Language Partners</a>
-                    <a href="PreviousSession.html">Previous Session</a>
-                    <a href="CuSession.html">Current Session</a>
-                    <a href="RateReviews .html">Rate and review</a>
-                </div>
+                    <a href="#">View</a>
+                    <div class="dropdown-content">
+                        <a href="PreviousSessionsN.html">Previous Session</a>
+                        <a href="CuSessionN.html">Current Session</a>
+                        <a href="viewReviews.html">Reviews</a>
+                    </div>
                 </li>
-                
-                <li><a href="LearnerProfile.html">Manage Profile</a></li>
-             
+                <li><a href="NativeProfile.html">Manage Profile</a></li>
                 <li><a href="../homePage/HomePage.html">Sign Out</a></li>
-            </ul> 
+            </ul>
         </nav>
-        
     </header>
-    <br>
-    <div class="Previous-Session">
-<h1 >Previous Sessions</h1></div>
 
-<table>
-    <tr>
-        <th>Date</th>
-        <th>Language</th>
-        <th>Duration</th>
-        <th>Level</th>
-        <th>Progress</th>
-    </tr>
-    <tr>
-        <td>2024-02-15</td>
-        <td>Spanish</td>
-        <td>1 hour</td>
-        <td>Intermediate</td>
-        <td class="progress">70%</td>
-    </tr>
-    <tr>
-        <td>2024-02-12</td>
-        <td>French</td>
-        <td>30 minutes</td>
-        <td>Beginner</td>
-        <td class="progress">50%</td>
-    </tr>
-    <tr>
-        <td>2024-02-10</td>
-        <td>German</td>
-        <td>30 minutes</td>
-        <td>Advanced</td>
-        <td class="progress">90%</td>
-    </tr>
-    <tr>
-        <td>2024-02-08</td>
-        <td>Japanese</td>
-        <td>2 hours</td>
-        <td>Intermediate</td>
-        <td class="progress">60%</td>
-    </tr>
-</table>
-<footer>
-    <div class="social-icons">
-      <a href="https://www.facebook.com/talktandem" class="icon facebook"><i class="fab fa-facebook"></i></a>
-      <a href="https://www.twitter.com/talktandem" class="icon twitter"><i class="fab fa-twitter"></i></a>
-      <a href="https://www.instagram.com/talktandem" class="icon instagram"><i class="fab fa-instagram"></i></a>
-      <a href="https://www.linkedin.com/talktandem" class="icon linkedin"><i class="fab fa-linkedin"></i></a>
-      <a href="mailto:contact@talktandem.com" class="icon email"><i class="far fa-envelope"></i></a>
-    </div>
-    <p class="copyright">© 2024 Talk Tandem. All rights reserved.</p>
-  </footer>  
+    <br>
+    <h1>Previous Sessions</h1>
+
+    <table>
+    <?php
+session_start(); // Start the session
+
+// Check if the language learner's email address is set in the session
+if(isset($_SESSION['language_Learner_email'])) {
+    $language_Learner_email = $_SESSION['language_Learner_email'];
+
+    // Establish database connection
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "web2";
+
+    // Create connection
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    // Get the current time
+    $current_time = date("Y-m-d H:i:s");
+
+    // Query to retrieve data from the request table for sessions that have finished
+    // Fetch data from the 'request' table for sessions that haven't finished
+    $sql = "SELECT *, ADDTIME(schedule_Time, session_duration) AS session_end FROM request WHERE ADDTIME(schedule_Time, session_duration) <= '$current_time' AND language_Learner_email = '$language_Learner_email'";
+
+    $result = $conn->query($sql);
+
+    // Check if there are any results
+    if ($result->num_rows > 0) {
+        // Output data in a table format
+        echo "<table>
+                <tr>
+                    <th>Date</th>
+                    <th>Language</th>
+                    <th>Duration</th>
+                    <th>Level</th>
+                </tr>";
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr>";
+            echo "<td>" . $row["schedule_Time"] . "</td>";
+            echo "<td>" . $row["language"] . "</td>";
+            echo "<td>" . $row["session_duration"] . "</td>";
+            echo "<td>" . $row["level"] . "</td>";
+            echo "</tr>";
+        }
+        echo "</table>";
+    } else {
+        echo "<p>No results</p>";
+    }
+
+    // Close the database connection
+    $conn->close();
+} else {
+    echo "Language learner email address not set in session.";
+}
+?>
+
+
+
+
+    </table>
+
+    <footer>
+        <div class="social-icons">
+            <a href="https://www.facebook.com/talktandem" class="icon facebook"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.twitter.com/talktandem" class="icon twitter"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.instagram.com/talktandem" class="icon instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.linkedin.com/talktandem" class="icon linkedin"><i class="fab fa-linkedin"></i></a>
+            <a href="mailto:contact@talktandem.com" class="icon email"><i class="far fa-envelope"></i></a>
+        </div>
+        <p class="copyright">©️ 2024 Talk Tandem. All rights reserved.</p>
+    </footer>
 </body>
 </html>
