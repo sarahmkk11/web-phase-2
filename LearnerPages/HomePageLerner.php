@@ -53,9 +53,9 @@
                 <div class="dropdown-content">
                 <a href="mybook.php">My Booked Session</a>
                     <a href="PartnerList.php">Language Partners</a>
-                    <a href="PreviousSession.html">Previous Session</a>
-                    <a href="CuSession.html">Current Session</a>
-                    <a href="RateReviews .html">Rate and review</a>
+                    <a href="PreviousSession.php">Previous Session</a>
+                    <a href="CuSession.php">Current Session</a>
+                    <a href="RateReviews .php">Rate and review</a>
                 </div>
                 </li>
                 
