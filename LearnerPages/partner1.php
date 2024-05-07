@@ -111,7 +111,7 @@ if($stmtrate->rowCount()>0)
 
 }else
 {
-  $rateofprtner="no rate yet";
+  $rateofprtner="0";
 }
 
 ?>
@@ -260,7 +260,7 @@ if($stmtrate->rowCount()>0)
         <br>
             <!-- Feedbacks -->
             <?php
-                $select_query="select * from review where session_id={$_REQUEST['partsession']}";
+                $select_query="select * from review where language_partners_email='$email'";
                 $stmt=$db->prepare($select_query);
                 $resobj=$stmt->execute([]);
                 if($stmt->rowCount()>0)
@@ -317,7 +317,8 @@ if($stmtrate->rowCount()>0)
 <br>
   
    <?php
-            $select_query_partnersesession="select * from  partnersesession where language_partners_email='$email' AND statussession='available'";
+   
+            $select_query_partnersesession="select * from  partnersesession where Id={$_REQUEST["partsession"]}";
             $stmt_sesession=$db->prepare($select_query_partnersesession);
             $resobj=$stmt_sesession->execute([]);
             if($stmt_sesession->rowCount()>0)
@@ -338,6 +339,7 @@ width: 400px;'>
     <p><span class='data'><i class='fas fa-language'></i></span> Language: {$row['Teacheslanguges']} </p>
     <p><span class='data'><i class='fas fa-calendar-alt'></i></span> Date: {$row['datesession']} </p>
     <p><span class='data'><i class='far fa-clock'></i></span> Session Duration: {$row['SessionDuration']} hour </p>
+    <p><span class='data'><i class='bi bi-tag'></i></span> Session Price: {$row['price']} hour </p>
            
 </div>
 </div>

@@ -179,7 +179,7 @@ if( isset($_REQUEST['messageidforlarner'])){
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
             if($row['photo']==null)
             $row['photo']="4325945.png";
-            $select_query_session="select * from partnersesession where language_partners_email='{$row['email']}'";
+            $select_query_session="select * from partnersesession where language_partners_email='{$row['email']}' AND statussession='available'";
             $stmt_session=$db->prepare($select_query_session);
             $resobj=$stmt_session->execute([]);
             $select_rate="select AVG(rate) FROM rate WHERE language_partners_email='{$row['email']}' GROUP BY language_partners_email";
@@ -242,14 +242,15 @@ if(@$a[1]=="above" || @$a[1]==""  ){
         $a[0]=0;
     }
    
-    $select_query="select * from  partnersesession  WHERE Teacheslanguges LIKE '%$_REQUEST[languge]%'    AND price >=$a[0] ";
+    $select_query="select * from  partnersesession  WHERE Teacheslanguges LIKE '%$_REQUEST[languge]%'    AND price >=$a[0] AND statussession='available'";
     if($_REQUEST["languge"]=="others" ||$_REQUEST["languge"]=="I want to learn..")
-    $select_query="select * from partnersesession WHERE     price >=$a[0] ";
+    $select_query="select * from partnersesession WHERE     price >=$a[0] AND statussession='available'";
 
 }else{
-    $select_query="select * from partnersesession WHERE Teacheslanguges LIKE '%$_REQUEST[languge]%'   AND price BETWEEN  $a[0] AND  $a[1]";
+    $select_query="select * from partnersesession WHERE Teacheslanguges LIKE '%$_REQUEST[languge]%'   AND price BETWEEN  $a[0] AND  $a[1] AND statussession='available'";
     if($_REQUEST["languge"]=="others" ||$_REQUEST["languge"]=="I want to learn..")
-    $select_query="select * from partnersesession WHERE  price BETWEEN  $a[0] AND  $a[1]";
+    $select_query="select * from partnersesession WHERE  price BETWEEN  $a[0] AND  $a[1] AND statussession='available'
+  ";
 
 }
 
