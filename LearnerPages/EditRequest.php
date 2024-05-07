@@ -1,3 +1,30 @@
+<?php
+session_start();
+
+
+$servername= "localhost";
+$username= "root" ;
+$password= "";
+$dbname= "projectdb" ;
+$connection= mysqli_connect($servername,$username,$password,$dbname);
+$database= mysqli_select_db($connection, $dbname);
+// Check the connection
+if (!$connection) 
+die("Connection failed: ".mysqli_connect_error());
+
+$email =  $_SESSION['email'];
+if(isset($_GET['id'])){
+       $id2 = mysqli_real_escape_string($connection,$_GET['id']);
+   $sql = "SELECT 'language', 'level',' start_date', 'duration', 'language_learner_email', 'language_partner_email' FROM  `request` WHERE `username` = '$id2'";
+   $result = mysqli_query($connection,  $sql);
+   $valu = mysqli_num_rows($result);
+}
+
+   
+
+?>
+
+
 <!DOCTYPE html>
 <html>
 
@@ -15,7 +42,7 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> <!--to use icons -->
     <link rel="shortcut icon" href="../homePage/Logo white .jpeg" type="image/x-icon">
     <link rel="stylesheet" href="HomePageLerner.css">
-    <link rel="stylesheet" href="EditRequest.css">
+    <link rel="stylesheet" href="PostRequest.css">
 
 </head>
 
@@ -31,13 +58,13 @@
 
     <nav class="mainMenu">
         <ul>
-            <li><a href="HomePageLerner.html">Home</a></li>
+            <li><a href="HomePageLerner.php">Home</a></li>
 
             <li class="dropdown">
-                <a href="HomePageLerner.html#Request">Request</a>
+                <a href="HomePageLerner.php#Request">Request</a>
                 <div class="dropdown-content">
-                    <a href="HomePageLerner.html#new-Request">New</a>
-                    <a href="HomePageLerner.html#Current">Current</a>
+                    <a href="HomePageLerner.php#new-Request">New</a>
+                    <a href="HomePageLerner.php#Current">Current</a>
                 </div> 
             </li>
             <li class="dropdown">
@@ -46,13 +73,13 @@
                 <a href="PartnerList.php">Language Partners</a>
                 <a href="PreviousSession.php">Previous Session</a>
                 <a href="CuSession.php">Current Session</a>
-                <a href="RateReviews .php">Rate and review</a>
+                <a href="RateReviews.php">Rate and review</a>
             </div>
             </li>
             
-            <li><a href="LearnerProfile.html">Manage Profile</a></li>
+            <li><a href="LearnerProfile.php">Manage Profile</a></li>
          
-            <li><a href="../homePage/HomePage.html">Sign Out</a></li>
+            <li><a href="../homePage/HomePage.php">Sign Out</a></li>
         </ul> 
     </nav>
     
@@ -121,7 +148,7 @@
             <option value="4">2 hour</option>
           </select>
       
-          <button type="submit" class="btn">Save Changes</button>
+          <button type="submit" class="btn" name="Save_Changes">Save Changes</button>
          </form>  
         </div>
         
