@@ -81,13 +81,13 @@ $conn->close();
 
         <nav class="mainMenu">
             <ul>
-                <li><a href="HomePageLerner.html">Home</a></li>
+                <li><a href="HomePageLerner.php">Home</a></li>
 
                 <li class="dropdown">
-                    <a href="HomePageLerner.html#Request">Request</a>
+                    <a href="HomePageLerner.php#Request">Request</a>
                     <div class="dropdown-content">
-                        <a href="HomePageLerner.html#new-Request">New</a>
-                        <a href="HomePageLerner.html#Current">Current</a>
+                        <a href="HomePageLerner.php#new-Request">New</a>
+                        <a href="HomePageLerner.php#Current">Current</a>
                     </div> 
                 </li>
                 <li class="dropdown">
