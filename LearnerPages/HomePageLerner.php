@@ -40,7 +40,7 @@
         <nav class="mainMenu">
             <ul>
                 <li><a href="#">Home</a></li>
-
+                <li><a href="PartnerList.php?allmessages"> messages </a></li>
                 <li class="dropdown">
                     <a href="#">Request</a>
                     <div class="dropdown-content">
@@ -51,7 +51,8 @@
                 <li class="dropdown">
                 <a href="#">View</a>
                 <div class="dropdown-content">
-                    <a href="PartnerList.html">Language Partners</a>
+                <a href="mybook.php">My Booked Session</a>
+                    <a href="PartnerList.php">Language Partners</a>
                     <a href="PreviousSession.html">Previous Session</a>
                     <a href="CuSession.html">Current Session</a>
                     <a href="RateReviews .html">Rate and review</a>
@@ -60,7 +61,7 @@
                 
                 <li><a href="LearnerProfile.php">Manage Profile</a></li>
              
-                <li><a href="signOutL.php">Sign Out</a></li>
+                <li><a href="signOutL.php">Sign Out</a></li> 
             </ul> 
         </nav>
         
