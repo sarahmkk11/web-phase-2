@@ -95,28 +95,13 @@ if(isset($_GET['language_partners_email'])) {
     $_SESSION['language_partners_email'] = $_GET['language_partners_email'];
 }
 
-// Function to calculate progress percentage
-function calculateProgress($start, $duration) {
-    $start_timestamp = strtotime($start);
-    $end_timestamp = strtotime("+$duration", $start_timestamp);
-    $current_timestamp = time();
-    
-    $total_duration = ($end_timestamp - $start_timestamp) / 60; // Convert to minutes
-    $elapsed_duration = ($current_timestamp - $start_timestamp) / 60; // Convert to minutes
-    
-    $progress = ($elapsed_duration / $total_duration) * 100;
-    
-    // Ensure progress is not negative or greater than 100
-    $progress = max(0, min(100, $progress));
-    
-    return $progress;
-}
+
 
 // Establish a connection to the MySQL database
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "web2";
+$dbname = "projectdb ";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -145,12 +130,7 @@ if(isset($_SESSION['language_partners_email'])) {
             echo "<p>Schedule Time: " . $row['schedule_Time'] . "</p>";
             echo "<p>Session Duration: " . $row['session_duration'] . "</p>";
             
-            // Calculate progress
-            $progress = calculateProgress($row['schedule_Time'], $row['session_duration']);
-            
-            // Display progress bar
-            echo "<div class='progress-bar' style='width: $progress%;'></div>";
-            
+           
             
             // Add Delete and Continue session buttons
             echo "<div class='btn-container'>";
