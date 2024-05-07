@@ -252,7 +252,7 @@
                 <li class="dropdown">
                     <a href="#">View</a>
                     <div class="dropdown-content">
-                        <a href="PreviousSessionsN.php">Previous Session</a>
+                        <a href="PreviousSessions.php">Previous Session</a>
                         <a href="CuSessionN.php">Current Session</a>
                         <a href="viewReviews.php">Reviews</a>
                     </div>
