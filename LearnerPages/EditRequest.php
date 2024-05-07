@@ -1,28 +1,3 @@
-<?php
-session_start();
-
-
-$servername= "localhost";
-$username= "root" ;
-$password= "";
-$dbname= "projectdb" ;
-$connection= mysqli_connect($servername,$username,$password,$dbname);
-$database= mysqli_select_db($connection, $dbname);
-// Check the connection
-if (!$connection) 
-die("Connection failed: ".mysqli_connect_error());
-
-$email =  $_SESSION['email'];
-if(isset($_GET['id'])){
-       $id2 = mysqli_real_escape_string($connection,$_GET['id']);
-   $sql = "SELECT 'language', 'level',' start_date', 'duration', 'language_learner_email', 'language_partner_email' FROM  `request` WHERE `username` = '$id2'";
-   $result = mysqli_query($connection,  $sql);
-   $valu = mysqli_num_rows($result);
-}
-
-   
-
-?>
 
 
 <!DOCTYPE html>
@@ -87,14 +62,82 @@ if(isset($_GET['id'])){
 
 
 
-    <!--      Form       -->
+    <?php
+
+    $servername= "localhost";
+    $username= "root" ;
+    $password= "";
+    $dbname= "projectdb" ;
+    $connection= mysqli_connect($servername,$username,$password,$dbname);
+    $database= mysqli_select_db($connection, $dbname);
+    // Check the connection
+    if (!$connection) 
+    die("Connection failed: ".mysqli_connect_error());
 
     
-    <h1 class="text">Edit your Request </h1>
-	<div class="container">
+    
+
+  $query = "UPDATE requests SET `status` =  'expired' WHERE created_at < (NOW() - INTERVAL 1 HOUR) AND `status` = 'unserved'";
+            $q3 = $result = mysqli_query($connection, $query);
+            if($q3)
+            echo "done3" ;
+            ?>
+
+<?php
+session_start();
+if(isset($_SESSION['editDone'])){
+   
+    echo '<script>alert("Edited successful!");</script>';
+unset($_SESSION['editDone']);
+}
+        $email =  $_SESSION['email'];
+       
+           $sql = "SELECT 'language', 'level',' start_date', 'duration', 'language_learner_email', 'language_partner_email' FROM  `request` WHERE `status` = 'unserved' AND `LearnerEmail`= '$email '";
+
+           $result = mysqli_query($connection,  $sql);
+     
+           $valu = mysqli_num_rows($result);
+    
         
+        ?>
+               <h1 class="text">Edit your Request </h1>
+	             <div class="container">
+
+     <?php 
+    
+     if($valu > 0 ){
+    
+    $x = 0;
+    while($x< $valu  ){
+    
+     $row = mysqli_fetch_row($result);
+     
+     $language = key($row);
+     next($row);
+     
+     $level= key($row);
+     next($row);
+     
+     $startDate = key($row);
+     next($row);
+     
+     $duration = key($row);
+     next($row);
+     
+    
+
+     $language_learner_email = key($row);
+     next($row);
+     
+     $language_partner_email = key($row);
+     next($row);
+
+     $language_partner_email = "SELECT `email` FROM `language_partner` WHERE `partner`.`ID` = $row[$id]";
+     $result2 = mysqli_query($connection, $language_partner_email );
+    ?> 
         <form>
           <label for="lang">Choose language:</label>
+          <label class="lang" ><?php echo(($row[$language]))?> </label><br>
           <input class="lang" list="language" name="lang" placeholder="Choose" value="English" readonly>
           <datalist id="language">
             <option value="English" >
@@ -109,6 +152,7 @@ if(isset($_GET['id'])){
           </datalist>
           
           <label>Choose your level:</label>
+          <label class="lang" ><?php echo(($row[$level]))?> </label><br>
           <div class="level-container">
             <div>
               <input  id="level1" type="radio" name="level">
@@ -138,20 +182,40 @@ if(isset($_GET['id'])){
           </div>
       
           <label for="start-date">When do you want to start learning:</label>
+          <label class="lang" ><?php echo(($row[$startDate ]))?> </label><br>
           <input type="datetime-local" >
       
           <label for="duration">Choose course duration:</label>
+          <label class="lang" ><?php echo(($row[$duration ]))?> </label><br>
           <select disabled name="duration" id="duration">
             <option value="fixed">30 munits</option>
             <option value="2"selected>1 hour</option>
             <option value="3">1:30 hour</option>
             <option value="4">2 hour</option>
           </select>
+
+          <?php
+  
+  $date = $row[$created_at];
+  $newDate = date('Y-m-d H:i:s', strtotime($date. ' + 1 hours'));
+
+?>
       
-          <button type="submit" class="btn" name="Save_Changes">Save Changes</button>
+          <button type="submit" class="btn" name="Save_Changes"><a href='../HTML_Files/editingRequest.php?id=<?php echo($row[$id])?>'>Save Changes</button>
          </form>  
         </div>
         
+        <?php
+     $x++; } 
+    }//end if
+    else{
+    ?>
+    
+    <div >
+    <div class="container">
+        <h2>No posted job request yet </h2></div>
+    <?php } ?>
+
 <!--    footer    -->
 <footer>
     <div class="social-icons">
