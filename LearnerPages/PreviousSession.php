@@ -252,9 +252,9 @@
                 <li class="dropdown">
                     <a href="#">View</a>
                     <div class="dropdown-content">
-                        <a href="PreviousSessions.php">Previous Session</a>
-                        <a href="CuSessionN.php">Current Session</a>
-                        <a href="viewReviews.php">Reviews</a>
+                        <a href="PreviousSession.php">Previous Session</a>
+                        <a href="CuSession.php">Current Session</a>
+                        <a href="RateReviews.php">Reviews</a>
                     </div>
                 </li>
                 <li><a href="NativeProfile.php">Manage Profile</a></li>
@@ -268,63 +268,59 @@
 
     <table>
     <?php
-session_start(); // Start the session
 
-// Check if the language learner's email address is set in the session
-if(isset($_SESSION['language_Learner_email'])) {
-    $language_Learner_email = $_SESSION['language_Learner_email'];
+// Establish database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "projectdb";
 
-    // Establish database connection
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "projectdb ";
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    // Get the current time
-    $current_time = date("Y-m-d H:i:s");
-
-    // Query to retrieve data from the request table for sessions that have finished
-    // Fetch data from the 'request' table for sessions that haven't finished
-    $sql = "SELECT *, ADDTIME(schedule_Time, session_duration) AS session_end FROM request WHERE ADDTIME(schedule_Time, session_duration) <= '$current_time' AND language_Learner_email = '$language_Learner_email'";
-
-    $result = $conn->query($sql);
-
-    // Check if there are any results
-    if ($result->num_rows > 0) {
-        // Output data in a table format
-        echo "<table>
-                <tr>
-                    <th>Date</th>
-                    <th>Language</th>
-                    <th>Duration</th>
-                    <th>Level</th>
-                </tr>";
-        while ($row = $result->fetch_assoc()) {
-            echo "<tr>";
-            echo "<td>" . $row["schedule_Time"] . "</td>";
-            echo "<td>" . $row["language"] . "</td>";
-            echo "<td>" . $row["session_duration"] . "</td>";
-            echo "<td>" . $row["level"] . "</td>";
-            echo "</tr>";
-        }
-        echo "</table>";
-    } else {
-        echo "<p>No results</p>";
-    }
-
-    // Close the database connection
-    $conn->close();
-} else {
-    echo "Language learner email address not set in session.";
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
+
+// Get the current time
+$current_time = date("Y-m-d H:i:s");
+
+// Query to retrieve data from the request table for sessions that have finished
+$sql = "SELECT *, ADDTIME(schedule_Time, session_duration) AS session_end FROM request WHERE ADDTIME(schedule_Time, session_duration) <= '$current_time'";
+
+$result = $conn->query($sql);
+
+// Check if there are any results
+if ($result->num_rows > 0) {
+    // Output data in a table format
+    echo "<table>
+            <tr>
+                <th>Date</th>
+                <th>Language</th>
+                <th>Duration</th>
+                <th>Level</th>
+                <th>Rate And Review</th>
+
+            </tr>";
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr>";
+        echo "<td>" . $row["schedule_Time"] . "</td>";
+        echo "<td>" . $row["language"] . "</td>";
+        echo "<td>" . $row["session_duration"] . "</td>";
+        echo "<td>" . $row["level"] . "</td>";
+        echo "<td><a href='RateReviews.php'><button>Rate And Reviews</button></a></td>";
+
+
+        echo "</tr>";
+    }
+    echo "</table>";
+} else {
+    echo "<p>No results</p>";
+}
+
+// Close the database connection
+$conn->close();
 ?>
 
 
