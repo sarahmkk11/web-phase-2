@@ -67,7 +67,7 @@ $result = $conn->query($sql);
                 <li class="dropdown">
                     <a href="#">View</a>
                     <div class="dropdown-content">
-                        <a href="PreviousSessions.php">Previous Session</a>
+                        <a href="PreviousSession.php">Previous Session</a>
                         <a href="CuSession.php">Current Session</a>
                         <a href="RateReviews.php">Reviews</a>
                     </div>
