@@ -1,4 +1,7 @@
 <?php
+session_start(); // Start the session
+$user_email = $_SESSION['email']; 
+
 // Connect to your MySQL database
 $servername = "localhost"; // Change this to your database server name
 $username = "root"; // Change this to your database username
@@ -21,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $comment = $_POST["comment"];
 
     // Insert the new review into the database
-    $sql = "INSERT INTO user_reviews (username, partner, rating, comment) VALUES ('$username', '$partner', '$rating', '$comment')";
+    $sql = "INSERT INTO user_reviews (username, partner, rating, comment,language_Learner_email) VALUES ('$username', '$partner', '$rating', '$comment',$user_email)";
     if ($conn->query($sql) === TRUE) {
         echo '<script>openModal();</script>';
     } else {
@@ -29,11 +32,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Fetch data from the database
-$sql = "SELECT * FROM user_reviews";
-$result = $conn->query($sql);
+// Check if language_Learner_email session variable is set
+if(isset($_SESSION['email'])) {
+    $language_Learner_email = $_SESSION['email'];
 
+    // Fetch data from the database for sessions with the same language learner email
+    $sql = "SELECT * FROM user_reviews WHERE language_Learner_email = '$user_email'";
+    $result = $conn->query($sql);
+
+    // Display reviews
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            echo "Username: " . $row["username"]. " - Partner: " . $row["partner"]. " - Rating: " . $row["rating"]. " - Comment: " . $row["comment"]. "<br>";
+        }
+    } else {
+        echo "No reviews found for the language learner email: " . $user_email;
+    }
+} else {
+    echo "Language learner email address not provided.";
+}
+
+// Close the database connection
+$conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,35 +70,37 @@ $result = $conn->query($sql);
 </head>
 <body>
     <header>
-         <div class="logo">
-            <img src="../homePage/logo bule.jpeg" alt="Logo">
+    <div class="logo">
+            <img src="../homePage/logo bule.jpeg">
             <h1>Talk Tandem</h1>
         </div>
 
         <nav class="mainMenu">
             <ul>
-                <li><a href="HomePageNative.php">Home</a></li>
+                <li><a href="HomePageLerner.php">Home</a></li>
+
                 <li class="dropdown">
-                    <a href="#">Requests</a>
+                    <a href="HomePageLerner.php#Request">Request</a>
                     <div class="dropdown-content">
-                        <a href="LearningRequestList.php">Request List</a>
-                        <a href="HomePageNative.php##view_Request">Request Status</a>
-                        <a href="HomePageNative.php#Accept-Rej">Learner Requests</a>
-                    </div>
+                        <a href="HomePageLerner.php#new-Request">New</a>
+                        <a href="HomePageLerner.php#Current">Current</a>
+                    </div> 
                 </li>
                 <li class="dropdown">
-                    <a href="#">View</a>
-                    <div class="dropdown-content">
-                        <a href="PreviousSession.php">Previous Session</a>
-                        <a href="CuSession.php">Current Session</a>
-                        <a href="RateReviews.php">Reviews</a>
-                    </div>
+                <a href="#">View</a>
+                <div class="dropdown-content">
+                    <a href="PartnerList.php">Language Partners</a>
+                    <a href="PreviousSession.php">Previous Session</a>
+                    <a href="CuSession.php">Current Session</a>
+                    <a href="RateReviews.php">Rate and review</a>
+                </div>
                 </li>
-                <li><a href="NativeProfile.php">Manage Profile</a></li>
+                
+                <li><a href="LearnerProfile.php">Manage Profile</a></li>
+             
                 <li><a href="../homePage/HomePage.php">Sign Out</a></li>
-            </ul>
+            </ul> 
         </nav>
-    </header>
     </header>
     <div class="container">
         <h1>Talk Tandem Website Reviews</h1>
@@ -88,7 +112,7 @@ $result = $conn->query($sql);
             <input type="text" id="username" name="username" required>
             <label for="partner">Partner Name:</label>
             <input type="text" id="partner" name="partner" required>
-            <label for="rating">Rating (1-5):</label>
+            <label for="rating">Rating (1-5) "5 is the best":</label>
             <input type="number" id="rating" name="rating" min="1" max="5" required>
             <label for="comment">Your Review:</label>
             <textarea id="comment" name="comment" rows="4" required></textarea>
@@ -125,10 +149,18 @@ $result = $conn->query($sql);
     </div>
 
     <footer>
-        <!-- Your footer content here -->
+    <div class="social-icons">
+      <a href="https://www.facebook.com/talktandem" class="icon facebook"><i class="fab fa-facebook"></i></a>
+      <a href="https://www.twitter.com/talktandem" class="icon twitter"><i class="fab fa-twitter"></i></a>
+      <a href="https://www.instagram.com/talktandem" class="icon instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.linkedin.com/talktandem" class="icon linkedin"><i class="fab fa-linkedin"></i></a>
+      <a href="mailto:contact@talktandem.com" class="icon email"><i class="far fa-envelope"></i></a>
+    </div>
+    <p class="copyright">© 2024 Talk Tandem. All rights reserved.</p>
+    </footer>
     </footer>
 
-    <!-- Include your JavaScript code -->
+ 
     <script>
         // Get the modal
         var modal = document.getElementById('myModal');
