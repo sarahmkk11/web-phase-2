@@ -20,8 +20,7 @@ if ($conn->connect_error) {
 $current_time = date("Y-m-d H:i:s");
 
 // Query to retrieve data from the request table for sessions that have finished
-$sql = "SELECT *, ADDTIME(schedule_Time, session_duration) AS session_end FROM request WHERE ADDTIME(schedule_Time, session_duration) <= '$current_time'AND 
-         language_Learner_email = '$user_email')";
+$sql = "SELECT *, ADDTIME(schedule_Time, session_duration) AS session_end FROM request WHERE ADDTIME(schedule_Time, session_duration) <= '$current_time' AND language_Learner_email = '$user_email'";
 
 $result = $conn->query($sql);
 
@@ -322,9 +321,7 @@ $conn->close();
     <br>
     <h1>Previous Sessions</h1>
 
-    <table>
-
-    </table>
+  
 
     <footer>
         <div class="social-icons">
