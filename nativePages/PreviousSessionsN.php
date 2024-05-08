@@ -1,33 +1,32 @@
 <?php
-session_start(); // Start the session
+session_start(); 
 $user_email = $_SESSION['email']; 
 
-// Establish database connection
+
 $servername = "localhost";
 $username = "root";
 $password = "";
 $dbname = "projectdb";
 
-// Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
+
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Get the current time
+
 $current_time = date("Y-m-d H:i:s");
 
-// Query to retrieve data from the request table for sessions that have finished
+
 $sql = "SELECT *, ADDTIME(schedule_Time, session_duration) AS session_end FROM request WHERE ADDTIME(schedule_Time, session_duration) <= '$current_time'AND 
          language_partners_email = '$user_email')";
 
 $result = $conn->query($sql);
 
-// Check if there are any results
+
 if ($result->num_rows > 0) {
-    // Output data in a table format
+    
     echo "<table>
             <tr>
                 <th>Date</th>
@@ -50,7 +49,7 @@ if ($result->num_rows > 0) {
     echo "<p>No results</p>";
 }
 
-// Close the database connection
+
 $conn->close();
 ?>
 
@@ -64,7 +63,7 @@ $conn->close();
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="PreviousSessionN.css">
     <style>
-        /* Paste the provided CSS here */
+      
         body {
             font-family: Arial, sans-serif;
             background-color: #f9f9f9;
