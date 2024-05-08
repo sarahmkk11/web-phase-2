@@ -1,3 +1,59 @@
+<?php
+session_start(); // Start the session
+$user_email = $_SESSION['email']; 
+
+// Establish database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "projectdb";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Get the current time
+$current_time = date("Y-m-d H:i:s");
+
+// Query to retrieve data from the request table for sessions that have finished
+$sql = "SELECT *, ADDTIME(schedule_Time, session_duration) AS session_end FROM request WHERE ADDTIME(schedule_Time, session_duration) <= '$current_time'AND 
+         language_partners_email = '$user_email')";
+
+$result = $conn->query($sql);
+
+// Check if there are any results
+if ($result->num_rows > 0) {
+    // Output data in a table format
+    echo "<table>
+            <tr>
+                <th>Date</th>
+                <th>Language</th>
+                <th>Duration</th>
+                <th>Level</th>
+                <th>Rate And Review</th>
+            </tr>";
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr>";
+        echo "<td>" . $row["schedule_Time"] . "</td>";
+        echo "<td>" . $row["language"] . "</td>";
+        echo "<td>" . $row["session_duration"] . "</td>";
+        echo "<td>" . $row["level"] . "</td>";
+        echo "<td><a href='RateReviews.php'><button>Rate And Reviews</button></a></td>";
+        echo "</tr>";
+    }
+    echo "</table>";
+} else {
+    echo "<p>No results</p>";
+}
+
+// Close the database connection
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -267,67 +323,6 @@
     <h1>Previous Sessions</h1>
 
     <table>
-    <?php
-session_start(); // Start the session
-$user_email = $_SESSION['email']; 
-
-// Establish database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "projectdb";
-
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-// Get the current time
-$current_time = date("Y-m-d H:i:s");
-
-// Query to retrieve data from the request table for sessions that have finished
-$sql = "SELECT *, ADDTIME(schedule_Time, session_duration) AS session_end FROM request WHERE ADDTIME(schedule_Time, session_duration) <= '$current_time'AND 
-         language_partners_email = '$user_email')";
-
-$result = $conn->query($sql);
-
-// Check if there are any results
-if ($result->num_rows > 0) {
-    // Output data in a table format
-    echo "<table>
-            <tr>
-                <th>Date</th>
-                <th>Language</th>
-                <th>Duration</th>
-                <th>Level</th>
-                <th>Rate And Review</th>
-
-            </tr>";
-    while ($row = $result->fetch_assoc()) {
-        echo "<tr>";
-        echo "<td>" . $row["schedule_Time"] . "</td>";
-        echo "<td>" . $row["language"] . "</td>";
-        echo "<td>" . $row["session_duration"] . "</td>";
-        echo "<td>" . $row["level"] . "</td>";
-        echo "<td><a href='RateReviews.php'><button>Rate And Reviews</button></a></td>";
-
-
-        echo "</tr>";
-    }
-    echo "</table>";
-} else {
-    echo "<p>No results</p>";
-}
-
-// Close the database connection
-$conn->close();
-?>
-
-
-
 
     </table>
 
