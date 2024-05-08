@@ -110,7 +110,7 @@ $current_time = date("Y-m-d H:i:s");
 // Fetch data from the 'request' table for sessions that haven't finished
 $sql = "SELECT * FROM request WHERE 
         (TIMESTAMPADD(MINUTE, session_duration, schedule_Time) > '$current_time') AND 
-         language_Learner_email = '$user_email')";
+         language_partners_email = '$user_email')";
 $result = $conn->query($sql);
 
 // Check if any rows are returned
