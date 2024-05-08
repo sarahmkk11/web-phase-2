@@ -19,8 +19,8 @@ if ($conn->connect_error) {
 $current_time = date("Y-m-d H:i:s");
 
 
-$sql = "SELECT *, ADDTIME(schedule_Time, session_duration) AS session_end FROM request WHERE ADDTIME(schedule_Time, session_duration) <= '$current_time'AND 
-         language_partners_email = '$user_email')";
+$sql = "SELECT *, ADDTIME(schedule_Time, session_duration) AS session_end FROM request WHERE ADDTIME(schedule_Time, session_duration) <= '$current_time' AND language_partners_email = '$user_email'";
+
 
 $result = $conn->query($sql);
 
@@ -321,10 +321,7 @@ $conn->close();
     <br>
     <h1>Previous Sessions</h1>
 
-    <table>
-
-    </table>
-
+    
     <footer>
         <div class="social-icons">
             <a href="https://www.facebook.com/talktandem" class="icon facebook"><i class="fab fa-facebook"></i></a>
