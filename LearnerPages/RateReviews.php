@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $comment = $_POST["comment"];
 
     // Insert the new review into the database
-    $sql = "INSERT INTO user_reviews (username, partner, rating, comment,language_Learner_email) VALUES ('$username', '$partner', '$rating', '$comment',$user_email)";
+    $sql = "INSERT INTO user_reviews (username, partner, rating, comment, language_Learner_email) VALUES ('$username', '$partner', '$rating', '$comment', '$user_email')";
     if ($conn->query($sql) === TRUE) {
         echo '<script>openModal();</script>';
     } else {
@@ -32,29 +32,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Check if language_Learner_email session variable is set
-if(isset($_SESSION['email'])) {
-    $language_Learner_email = $_SESSION['email'];
-
-    // Fetch data from the database for sessions with the same language learner email
-    $sql = "SELECT * FROM user_reviews WHERE language_Learner_email = '$user_email'";
-    $result = $conn->query($sql);
-
-    // Display reviews
-    if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-            echo "Username: " . $row["username"]. " - Partner: " . $row["partner"]. " - Rating: " . $row["rating"]. " - Comment: " . $row["comment"]. "<br>";
-        }
-    } else {
-        echo "No reviews found for the language learner email: " . $user_email;
-    }
+// Fetch data from the database for sessions with the same language learner email and partner name
+if(isset($_POST['partner'])) {
+    $partner = $_POST['partner'];
+    $sql = "SELECT * FROM user_reviews WHERE language_Learner_email = '$user_email' AND partner = '$partner'";
 } else {
-    echo "Language learner email address not provided.";
+    $sql = "SELECT * FROM user_reviews WHERE language_Learner_email = '$user_email'";
 }
 
-// Close the database connection
-$conn->close();
+$result = $conn->query($sql);
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
