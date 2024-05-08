@@ -1,3 +1,50 @@
+<?php
+session_start(); // Start the session to access session variables
+
+// Step 1: Connect to the MySQL database
+$servername = "localhost";
+$username = "root"; // Your MySQL username
+$password = ""; // Your MySQL password
+$dbname = "projectdb"; // Your database name
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Get language partner email from session
+if (isset($_SESSION['email'])) {
+    $language_partner_email = $_SESSION['email'];
+} else {
+    // If session variable not set, handle accordingly (redirect, error message, etc.)
+    echo "Language partner email not found in session.";
+    exit; // Stop further execution
+}
+
+// Step 2: Execute query to select reviews for the language partner email
+$sql = "SELECT * FROM user_reviews WHERE language_partners_email = '$language_partner_email'";
+$result = $conn->query($sql);
+
+// Step 3: Fetch and display reviews
+if ($result->num_rows > 0) {
+    // Output data of each row
+    while($row = $result->fetch_assoc()) {
+        echo '<div class="review">';
+        echo '<strong>' . $row["partner"] . '</strong>'; // Assuming "partner" corresponds to partner name
+        echo '<span class="rating">Rating: ' . $row["rating"] . '</span>';
+        echo '<p>"' . $row["comment"] . '"</p>';
+        echo '</div>';
+    }
+} else {
+    echo "No reviews found for language partner with email: $language_partner_email";
+}
+
+// Close connection
+$conn->close();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -48,43 +95,7 @@
         <!-- Display existing reviews -->
         <div class="reviews">
             <h1>Previous Reviews and Ratings</h1>
-            <?php
-            // Step 1: Connect to the MySQL database
-            $servername = "localhost";
-            $username = "root"; // Your MySQL username
-            $password = ""; // Your MySQL password
-            $dbname = "web2"; // Your database name
-
-            // Create connection
-            $conn = new mysqli($servername, $username, $password, $dbname);
-
-            // Check connection
-            if ($conn->connect_error) {
-                die("Connection failed: " . $conn->connect_error);
-            }
-
-            // Step 2: Execute query to select reviews for partner "Renad"
-            $partner_name = "Renad"; // The partner name you're looking for
-            $sql = "SELECT * FROM user_reviews WHERE partner_name = '$partner_name'";
-            $result = $conn->query($sql);
-
-            // Step 3: Fetch and display reviews
-            if ($result->num_rows > 0) {
-                // Output data of each row
-                while($row = $result->fetch_assoc()) {
-                    echo '<div class="review">';
-                    echo '<strong>' . $row["partner_name"] . '</strong>';
-                    echo '<span class="rating">Rating: ' . $row["rating"] . '</span>';
-                    echo '<p>"' . $row["review"] . '"</p>';
-                    echo '</div>';
-                }
-            } else {
-                echo "No reviews found for $partner_name";
-            }
-
-            // Close connection
-            $conn->close();
-            ?>
+            
         </div>
 
         <!-- The Modal -->
