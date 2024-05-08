@@ -268,6 +268,8 @@
 
     <table>
     <?php
+session_start(); // Start the session
+$user_email = $_SESSION['email']; 
 
 // Establish database connection
 $servername = "localhost";
@@ -287,7 +289,8 @@ if ($conn->connect_error) {
 $current_time = date("Y-m-d H:i:s");
 
 // Query to retrieve data from the request table for sessions that have finished
-$sql = "SELECT *, ADDTIME(schedule_Time, session_duration) AS session_end FROM request WHERE ADDTIME(schedule_Time, session_duration) <= '$current_time'";
+$sql = "SELECT *, ADDTIME(schedule_Time, session_duration) AS session_end FROM request WHERE ADDTIME(schedule_Time, session_duration) <= '$current_time'AND 
+         language_Learner_email = '$user_email')";
 
 $result = $conn->query($sql);
 
