@@ -1,29 +1,29 @@
 <?php
-session_start(); // Start the session
+session_start(); 
 $user_email = $_SESSION['email']; 
 
-// Connect to your MySQL database
-$servername = "localhost"; // Change this to your database server name
-$username = "root"; // Change this to your database username
-$password = ""; // Change this to your database password
-$dbname = "projectdb"; // Change this to your database name
 
-// Create connection
+$servername = "localhost"; 
+$username = "root"; 
+$password = ""; 
+$dbname = "projectdb"; 
+
+
 $conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
+
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Function to handle form submission
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["username"];
     $partner = $_POST["partner"];
     $rating = $_POST["rating"];
     $comment = $_POST["comment"];
 
-    // Insert the new review into the database
+    
     $sql = "INSERT INTO user_reviews (username, partner, rating, comment, language_Learner_email) VALUES ('$username', '$partner', '$rating', '$comment', '$user_email')";
     if ($conn->query($sql) === TRUE) {
         echo '<script>openModal();</script>';
@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 
-// Fetch data from the database for sessions with the same language learner email and partner name
+
 if(isset($_POST['partner'])) {
     $partner = $_POST['partner'];
     $sql = "SELECT * FROM user_reviews WHERE language_Learner_email = '$user_email' AND partner = '$partner'";
@@ -51,10 +51,10 @@ $result = $conn->query($sql);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Talk Tandem Website Reviews</title>
-    <!-- Include your CSS stylesheets -->
+
     <link rel="stylesheet" href="RateReviews.css">
     <style>
-        /* Your additional CSS styles here */
+        
     </style>
 </head>
 <body>
@@ -94,7 +94,7 @@ $result = $conn->query($sql);
     <div class="container">
         <h1>Talk Tandem Website Reviews</h1>
 
-        <!-- Form for submitting reviews -->
+
         <form id="reviewForm" method="post">
             <h2>Write a Review</h2>
             <label for="username">Your Name:</label>
@@ -108,13 +108,13 @@ $result = $conn->query($sql);
             <input type="submit" value="Submit Review">
         </form>
 
-        <!-- Display existing reviews -->
+
         <div class="reviews">
             <h2>Previous Reviews and Ratings</h2>
             <?php
-            // Check if there are any reviews
+            
             if ($result->num_rows > 0) {
-                // Output data of each row
+                
                 while($row = $result->fetch_assoc()) {
                     echo '<div class="review">';
                     echo '<strong>' . $row["username"] . '</strong> <span class="partner-label">For:</span> <span class="partner">' . $row["partner"] . '</span>';
@@ -128,7 +128,7 @@ $result = $conn->query($sql);
             ?>
         </div>
 
-        <!-- The Modal -->
+        
         <div id="myModal" class="modal">
             <div class="modal-content">
                 <span class="close" onclick="closeModal()">&times;</span>
@@ -151,15 +151,15 @@ $result = $conn->query($sql);
 
  
     <script>
-        // Get the modal
+      
         var modal = document.getElementById('myModal');
 
-        // Function to display modal
+    
         function openModal() {
             modal.style.display = 'block';
         }
 
-        // Function to close modal
+        
         function closeModal() {
             modal.style.display = 'none';
         }
@@ -168,6 +168,6 @@ $result = $conn->query($sql);
 </html>
 
 <?php
-// Close database connection
+
 $conn->close();
 ?>
