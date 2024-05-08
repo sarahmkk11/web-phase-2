@@ -1,57 +1,6 @@
+
 <?php
-session_start(); 
-$user_email = $_SESSION['email']; 
-
-
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "projectdb";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-
-$current_time = date("Y-m-d H:i:s");
-
-
-$sql = "SELECT *, ADDTIME(schedule_Time, session_duration) AS session_end FROM request WHERE ADDTIME(schedule_Time, session_duration) <= '$current_time'AND 
-         language_partners_email = '$user_email')";
-
-$result = $conn->query($sql);
-
-
-if ($result->num_rows > 0) {
-    
-    echo "<table>
-            <tr>
-                <th>Date</th>
-                <th>Language</th>
-                <th>Duration</th>
-                <th>Level</th>
-                <th>Rate And Review</th>
-            </tr>";
-    while ($row = $result->fetch_assoc()) {
-        echo "<tr>";
-        echo "<td>" . $row["schedule_Time"] . "</td>";
-        echo "<td>" . $row["language"] . "</td>";
-        echo "<td>" . $row["session_duration"] . "</td>";
-        echo "<td>" . $row["level"] . "</td>";
-        echo "<td><a href='RateReviews.php'><button>Rate And Reviews</button></a></td>";
-        echo "</tr>";
-    }
-    echo "</table>";
-} else {
-    echo "<p>No results</p>";
-}
-
-
-$conn->close();
-?>
+session_start(); ?>                
 
 <!DOCTYPE html>
 <html lang="en">
@@ -63,7 +12,7 @@ $conn->close();
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="PreviousSessionN.css">
     <style>
-      
+        
         body {
             font-family: Arial, sans-serif;
             background-color: #f9f9f9;
@@ -193,7 +142,7 @@ $conn->close();
             align-items: center;
         }
 
-        /* Table */
+        
         h1 {
             text-align: center;
         }
@@ -226,7 +175,7 @@ $conn->close();
             background-color: #91dcf9;
         }
 
-        /* Footer */
+       
         footer {
             background: linear-gradient(135deg,#8FE2F5,#858BEF);
             padding: 20px;
@@ -320,11 +269,60 @@ $conn->close();
 
     <br>
     <h1>Previous Sessions</h1>
+    <?php
+$user_email = $_SESSION['email']; 
 
-    <table>
 
-    </table>
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "projectdb";
 
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+
+$current_time = date("Y-m-d H:i:s");
+
+
+$sql = "SELECT *, ADDTIME(schedule_Time, session_duration) AS session_end FROM request WHERE ADDTIME(schedule_Time, session_duration) <= '$current_time' AND language_parters_email = '$user_email'";
+
+$result = $conn->query($sql);
+
+
+if ($result->num_rows > 0) {
+    
+    echo "<table>
+            <tr>
+                <th>Date</th>
+                <th>Language</th>
+                <th>Duration</th>
+                <th>Level</th>
+                <th>Rate And Review</th>
+            </tr>";
+    while ($row = $result->fetch_assoc()) {
+        echo "<tr>";
+        echo "<td>" . $row["schedule_Time"] . "</td>";
+        echo "<td>" . $row["language"] . "</td>";
+        echo "<td>" . $row["session_duration"] . "</td>";
+        echo "<td>" . $row["level"] . "</td>";
+        echo "<td><a href='RateReviews.php'><button>Rate And Reviews</button></a></td>";
+        echo "</tr>";
+    }
+    echo "</table>";
+} else {
+    echo "<p>No results</p>";
+}
+
+
+$conn->close();
+?>
+    
     <footer>
         <div class="social-icons">
             <a href="https://www.facebook.com/talktandem" class="icon facebook"><i class="fab fa-facebook"></i></a>
