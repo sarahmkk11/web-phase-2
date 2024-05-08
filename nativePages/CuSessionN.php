@@ -7,7 +7,7 @@
     <meta name="keywords" content="Learn, Languages, education">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="CuSessionN.css">
+    <link rel="stylesheet" href="CuSession.css">
     <style>
         .btn-delete {
             background-color: #f44336;
@@ -73,9 +73,9 @@
                 <a href="#">View</a>
                 <div class="dropdown-content">
                     <a href="PartnerList.php">Language Partners</a>
-                    <a href="PreviousSession.php">Previous Session</a>
-                    <a href="CuSession.php">Current Session</a>
-                    <a href="RateReviews .php">Rate and review</a>
+                    <a href="PreviousSessionsN.php">Previous Session</a>
+                    <a href="CuSessionN.php">Current Session</a>
+                    <a href="viewReviews.php">Rate and review</a>
                 </div>
                 </li>
                 
@@ -88,20 +88,14 @@
 
     <div class="container">
     <?php
-session_start(); // Start the session
-
-// Set the language_Learner_email session variable if it's provided in the request
-if(isset($_GET['language_partners_email'])) {
-    $_SESSION['language_partners_email'] = $_GET['language_partners_email'];
-}
-
-
+session_start(); // Start session to retrieve user's email
+$user_email = $_SESSION['email']; // Assuming you have stored user's email in a session variable
 
 // Establish a connection to the MySQL database
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname = "projectdb ";
+$dbname = "projectdb";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -111,45 +105,38 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Check if language_partners_email session variable is set
-if(isset($_SESSION['language_partners_email'])) {
-    $language_Learner_email = $_SESSION['language_partners_email'];
+$current_time = date("Y-m-d H:i:s");
 
-    // Fetch data from the 'request' table for sessions that haven't finished
-    $sql = "SELECT * FROM request WHERE TIMESTAMPADD(MINUTE, session_duration, schedule_Time) > '$current_time' AND language_partners_email = '$language_partners_email'";
-    $result = $conn->query($sql);
+// Fetch data from the 'request' table for sessions that haven't finished
+$sql = "SELECT * FROM request WHERE 
+        (TIMESTAMPADD(MINUTE, session_duration, schedule_Time) > '$current_time') AND 
+         language_Learner_email = '$user_email')";
+$result = $conn->query($sql);
 
-    // Check if any rows are returned
-    if ($result->num_rows > 0) {
-        // Loop through each row
-        while($row = $result->fetch_assoc()) {
-            // Generate HTML for each session
-            echo "<div class='session'>";
-            echo "<h2>Language: " . $row['language'] . "</h2>";
-            echo "<p>Level: " . $row['level'] . "</p>";
-            echo "<p>Schedule Time: " . $row['schedule_Time'] . "</p>";
-            echo "<p>Session Duration: " . $row['session_duration'] . "</p>";
-            
-           
-            
-            // Add Delete and Continue session buttons
-            echo "<div class='btn-container'>";
-            echo "<button class='btn-delete' onclick='location.href=\"delete_session.php?session_id=" . $row['SessionID'] . "\"'>Delete Session</button>";
-            echo "<button class='btn-continue' onclick='location.href=\"https://www.youtube.com/watch?v=your_video_id_here\"'>Continue Session</button>";
-            echo "</div>";
-            
-            echo "</div>"; // session div
-        }
-    } else {
-        echo "No sessions found.";
+// Check if any rows are returned
+if ($result->num_rows > 0) {
+    // Loop through each row
+    while($row = $result->fetch_assoc()) {
+        // Generate HTML for each session
+        echo "<div class='session'>";
+        echo "<h2>Language: " . $row['language'] . "</h2>";
+        echo "<p>Level: " . $row['level'] . "</p>";
+        echo "<p>Schedule Time: " . $row['schedule_Time'] . "</p>";
+        echo "<p>Session Duration: " . $row['session_duration'] . "</p>";
+
+        // Add Delete and Continue session buttons
+        echo "<div class='btn-container'>";
+        echo "<button class='btn-delete' onclick='location.href=\"delete_session.php?session_id=" . $row['SessionID'] . "\"'>Delete Session</button>";
+        echo "<button class='btn-continue' onclick='location.href=\"https://www.youtube.com/watch?v=your_video_id_here\"'>Continue Session</button>";
+        echo "</div>";
+
+        echo "</div>"; // session div
     }
 } else {
-    echo "Language partners email address not provided.";
+    echo "No sessions found.";
 }
-
 $conn->close();
 ?>
-
 
 
     </div>
