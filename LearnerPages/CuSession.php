@@ -75,7 +75,7 @@
                     <a href="PartnerList.php">Language Partners</a>
                     <a href="PreviousSession.php">Previous Session</a>
                     <a href="CuSession.php">Current Session</a>
-                    <a href="RateReviews .php">Rate and review</a>
+                    <a href="RateReviews.php">Rate and review</a>
                 </div>
                 </li>
                 
